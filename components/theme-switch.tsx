@@ -5,7 +5,6 @@ import { useIsSSR } from '@react-aria/ssr'
 import { VisuallyHidden } from '@react-aria/visually-hidden'
 import clsx from 'clsx'
 import { useTheme } from 'next-themes'
-import type { FC } from 'react'
 
 import { MoonFilledIcon, SunFilledIcon } from '@/components/icons'
 
@@ -14,7 +13,7 @@ export interface ThemeSwitchProps {
   classNames?: SwitchProps['classNames']
 }
 
-export const ThemeSwitch: FC<ThemeSwitchProps> = ({
+export const ThemeSwitch: React.FC<ThemeSwitchProps> = ({
   className,
   classNames,
 }) => {

@@ -5,7 +5,6 @@ import type { ThemeProviderProps } from 'next-themes'
 import { HeroUIProvider } from '@heroui/system'
 import { ThemeProvider as NextThemesProvider } from 'next-themes'
 import { useRouter } from 'next/navigation'
-import type * as React from 'react'
 
 export interface ProvidersProps {
   children: React.ReactNode
