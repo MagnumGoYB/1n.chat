@@ -42,7 +42,7 @@ module.exports = {
       value: 'perf',
     },
     refactor: {
-      description: '既不是错误修复也不是添加功能的代码更改',
+      description: '代码重构',
       emoji: '♻️',
       value: 'refactor',
     },
@@ -52,12 +52,12 @@ module.exports = {
       value: 'release',
     },
     style: {
-      description: '标记、空白、格式、缺少分号等...',
+      description: '代码格式化',
       emoji: '💄',
       value: 'style',
     },
     test: {
-      description: '添加失败的测试',
+      description: '添加缺失的测试',
       emoji: '🧪',
       value: 'test',
     },
