@@ -1,11 +1,11 @@
 'use client'
 
-import type { ThemeProviderProps } from 'next-themes'
-
 import { HeroUIProvider } from '@heroui/system'
 import { ToastProvider } from '@heroui/toast'
 import { ThemeProvider as NextThemesProvider } from 'next-themes'
 import { useRouter } from 'next/navigation'
+
+import type { ThemeProviderProps } from 'next-themes'
 
 export interface ProvidersProps {
   children: React.ReactNode
@@ -25,7 +25,7 @@ export function Providers({ children, themeProps }: ProvidersProps) {
 
   return (
     <HeroUIProvider navigate={router.push}>
-      <ToastProvider />
+      <ToastProvider toastProps={{ timeout: 1000 }} />
       <NextThemesProvider {...themeProps}>{children}</NextThemesProvider>
     </HeroUIProvider>
   )

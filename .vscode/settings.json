@@ -1,6 +1,5 @@
 {
-  "prettier.enable": false,
-  "eslint.enable": false,
+  "editor.foldingImportsByDefault": true,
   "editor.formatOnSave": true,
   "editor.codeActionsOnSave": {
     "source.fixAll.oxc": "explicit",

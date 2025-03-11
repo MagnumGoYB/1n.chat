@@ -1,11 +1,12 @@
 import '@/styles/globals.css'
-import clsx from 'clsx'
-import type { Metadata, Viewport } from 'next'
 
+import clsx from 'clsx'
+
+import { inter, roboto_mono } from '@/config/fonts'
+import { siteConfig } from '@/config/site'
 import { Providers } from './providers'
 
-import { fontSans } from '@/config/fonts'
-import { siteConfig } from '@/config/site'
+import type { Metadata, Viewport } from 'next'
 
 export const metadata: Metadata = {
   title: {
@@ -32,7 +33,8 @@ export default function RootLayout({
 }) {
   const rootClass = clsx(
     'min-h-screen bg-background font-sans antialiased',
-    fontSans.variable,
+    inter.variable,
+    roboto_mono.variable,
   )
 
   return (
