@@ -1,7 +1,6 @@
 'use client'
 
-import { HeroUIProvider } from '@heroui/system'
-import { ToastProvider } from '@heroui/toast'
+import { HeroUIProvider, ToastProvider } from '@heroui/react'
 import { ThemeProvider as NextThemesProvider } from 'next-themes'
 import { useRouter } from 'next/navigation'
 

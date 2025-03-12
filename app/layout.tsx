@@ -1,9 +1,8 @@
 import '@/styles/globals.css'
 
-import clsx from 'clsx'
-
 import { inter, roboto_mono } from '@/config/fonts'
 import { siteConfig } from '@/config/site'
+import { cn } from '@heroui/react'
 import { Providers } from './providers'
 
 import type { Metadata, Viewport } from 'next'
@@ -14,9 +13,8 @@ export const metadata: Metadata = {
     template: `%s - ${siteConfig.name}`,
   },
   description: siteConfig.description,
-  icons: {
-    icon: '/favicon.ico',
-  },
+  authors: { name: siteConfig.name, url: siteConfig.url },
+  robots: { follow: false, index: false },
 }
 
 export const viewport: Viewport = {
@@ -31,7 +29,7 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
-  const rootClass = clsx(
+  const rootClass = cn(
     'min-h-screen bg-background font-sans antialiased',
     inter.variable,
     roboto_mono.variable,
@@ -41,7 +39,12 @@ export default function RootLayout({
     <html suppressHydrationWarning lang="en">
       <head />
       <body className={rootClass}>
-        <Providers themeProps={{ attribute: 'class', defaultTheme: 'dark' }}>
+        <Providers
+          themeProps={{
+            attribute: 'class',
+            defaultTheme: siteConfig.defaultTheme,
+          }}
+        >
           {children}
         </Providers>
       </body>

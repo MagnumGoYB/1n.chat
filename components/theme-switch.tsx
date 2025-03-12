@@ -1,14 +1,12 @@
 'use client'
 
-import clsx from 'clsx'
-
 import { MoonFilledIcon, SunFilledIcon } from '@/components/icons'
-import { useSwitch } from '@heroui/switch'
+import { cn, useSwitch } from '@heroui/react'
 import { useIsSSR } from '@react-aria/ssr'
 import { VisuallyHidden } from '@react-aria/visually-hidden'
 import { useTheme } from 'next-themes'
 
-import type { SwitchProps } from '@heroui/switch'
+import type { SwitchProps } from '@heroui/react'
 
 export interface ThemeSwitchProps {
   className?: string
@@ -42,7 +40,7 @@ export const ThemeSwitch: React.FC<ThemeSwitchProps> = ({
   return (
     <Component
       {...getBaseProps({
-        className: clsx(
+        className: cn(
           'px-px transition-opacity hover:opacity-80 cursor-pointer',
           className,
           classNames?.base,
@@ -55,9 +53,9 @@ export const ThemeSwitch: React.FC<ThemeSwitchProps> = ({
       <div
         {...getWrapperProps()}
         className={slots.wrapper({
-          class: clsx(
+          class: cn(
             [
-              'w-auto h-auto',
+              'h-auto w-auto',
               'bg-transparent',
               'rounded-lg',
               'flex items-center justify-center',

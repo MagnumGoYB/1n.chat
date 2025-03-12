@@ -1,4 +1,4 @@
-import { tv } from 'tailwind-variants'
+import { tv } from '@heroui/react'
 
 export const title = tv({
   base: 'tracking-tight inline font-semibold',

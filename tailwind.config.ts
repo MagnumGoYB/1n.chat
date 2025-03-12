@@ -13,6 +13,9 @@ export default {
         sans: ['var(--font-inter)'],
         mono: ['var(--font-roboto-mono)'],
       },
+      transitionTimingFunction: {
+        'sidebar-collapse': 'cubic-bezier(.23,1,.32,1)',
+      },
     },
   },
   darkMode: 'class',
