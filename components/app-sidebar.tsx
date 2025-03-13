@@ -1,6 +1,6 @@
 'use client'
 
-import { Button, ScrollShadow, cn } from '@heroui/react'
+import { Button, ScrollShadow, Tooltip, cn } from '@heroui/react'
 import { useDisclosure } from '@heroui/use-disclosure'
 import { useIsMobile } from '@heroui/use-is-mobile'
 import { Icon } from '@iconify/react'
@@ -12,20 +12,52 @@ import {
 } from '@radix-ui/react-scroll-area'
 import { useCallback, useState } from 'react'
 
+import { Logo } from '@/components/icons'
 import SidebarDrawer from '@/components/sidebar-drawer'
+import SidebarMenu from '@/components/sidebar-menu'
+import SidebarUser from '@/components/sidebar-user'
+import { siteConfig } from '@/config/site'
 
 import type { ScrollShadowVisibility } from '@heroui/react'
-import type { PropsWithChildren } from 'react'
+import type { PropsWithChildren, UIEventHandler } from 'react'
 
 export default function AppSidebar({ children }: PropsWithChildren) {
-  const [isCollapsed, setIsCollapsed] = useState(false)
+  const [isCollapsed, setIsCollapsed] = useState(() => {
+    if (document.cookie === undefined) return false
+    return document.cookie.includes('sidebar-collapsed=true')
+  })
   const [scrollShadowVisibility, setScrollShadowVisibility] =
     useState<ScrollShadowVisibility>()
   const { isOpen, onOpenChange } = useDisclosure()
   const isMobile = useIsMobile()
 
   const onToggle = useCallback(() => {
-    setIsCollapsed((prev) => !prev)
+    setIsCollapsed((prev) => {
+      // eslint-disable-next-line no-document-cookie
+      document.cookie = `sidebar-collapsed=${!prev}; path=/`
+      return !prev
+    })
+  }, [])
+
+  const onScroll: UIEventHandler<HTMLDivElement> = useCallback((e) => {
+    const isAtTop = e.currentTarget.scrollTop === 0
+    const isAtBottom =
+      e.currentTarget.scrollTop ===
+      e.currentTarget.scrollHeight - e.currentTarget.clientHeight
+    const isAtMiddle =
+      e.currentTarget.scrollTop > 0 &&
+      e.currentTarget.scrollTop <
+        e.currentTarget.scrollHeight - e.currentTarget.clientHeight
+
+    if (isAtTop) {
+      setScrollShadowVisibility('bottom')
+    } else if (isAtBottom) {
+      setScrollShadowVisibility('top')
+    } else if (isAtMiddle) {
+      setScrollShadowVisibility('both')
+    } else {
+      setScrollShadowVisibility('auto')
+    }
   }, [])
 
   return (
@@ -42,7 +74,7 @@ export default function AppSidebar({ children }: PropsWithChildren) {
       >
         <div
           className={cn('relative flex h-full w-full flex-col pl-4', {
-            'items-center pb-8 pl-1.5': isCollapsed,
+            'items-center pb-9 pl-1.5': isCollapsed,
           })}
         >
           <div
@@ -50,11 +82,13 @@ export default function AppSidebar({ children }: PropsWithChildren) {
               'justify-center pr-1.5': isCollapsed,
             })}
           >
-            <div>1</div>
+            <div>
+              <Logo />
+            </div>
             {!isCollapsed && (
               <CollapseButton
+                isCollapsed={isCollapsed}
                 className="!-mr-1.5"
-                srOnly="Collapse sidebar"
                 onToggle={isMobile ? onOpenChange : onToggle}
               />
             )}
@@ -72,29 +106,41 @@ export default function AppSidebar({ children }: PropsWithChildren) {
             >
               <ScrollAreaViewport
                 className="h-full w-full rounded-[inherit]"
-                onScroll={(e) => {
-                  const isAtTop = e.currentTarget.scrollTop === 0
-                  const isAtBottom =
-                    e.currentTarget.scrollTop ===
-                    e.currentTarget.scrollHeight - e.currentTarget.clientHeight
-                  const isAtMiddle =
-                    e.currentTarget.scrollTop > 0 &&
-                    e.currentTarget.scrollTop <
-                      e.currentTarget.scrollHeight -
-                        e.currentTarget.clientHeight
-
-                  if (isAtTop) {
-                    setScrollShadowVisibility('bottom')
-                  } else if (isAtBottom) {
-                    setScrollShadowVisibility('top')
-                  } else if (isAtMiddle) {
-                    setScrollShadowVisibility('both')
-                  } else {
-                    setScrollShadowVisibility('auto')
-                  }
-                }}
+                onScroll={onScroll}
               >
-                <div className="gap-10">
+                <div className="my-5 flex w-full flex-col items-center gap-y-2 px-1">
+                  {isCollapsed ? (
+                    <Tooltip
+                      key="new-chat"
+                      content="Start new chat"
+                      placement="right"
+                      portalContainer={document.body}
+                      closeDelay={0}
+                      offset={5}
+                    >
+                      <Button
+                        isIconOnly
+                        color="default"
+                        variant="shadow"
+                        className="size-9 min-w-0 border bg-white font-medium dark:border-default-200 dark:bg-default-100"
+                        radius="full"
+                      >
+                        <Icon icon="lucide:plus" width={22} height={22} />
+                      </Button>
+                    </Tooltip>
+                  ) : (
+                    <Button
+                      color="default"
+                      variant="shadow"
+                      className="w-full min-w-0 border bg-white font-medium dark:border-default-200 dark:bg-default-100"
+                      radius="full"
+                    >
+                      Start new chat
+                    </Button>
+                  )}
+                </div>
+                <SidebarMenu isCollapsed={isCollapsed} items={siteConfig.nav} />
+                <div className="w-full gap-10 break-all py-3">
                   <p>
                     Lorem ipsum dolor sit amet consectetur, adipisicing elit.
                     Placeat eum illum atque sint beatae quibusdam exercitationem
@@ -121,12 +167,33 @@ export default function AppSidebar({ children }: PropsWithChildren) {
               </ScrollAreaScrollbar>
             </ScrollArea>
           </ScrollShadow>
-          {isCollapsed && (
-            <CollapseButton
-              className="absolute bottom-0"
-              srOnly="Expand sidebar"
-              onToggle={isMobile ? onOpenChange : onToggle}
+          <div
+            className={cn(
+              'flex w-full flex-col items-center justify-center gap-y-2 pr-4',
+              { 'pr-1.5': isCollapsed },
+            )}
+          >
+            <SidebarUser
+              isCollapsed={isCollapsed}
+              name="Admin"
+              email="admin@example.com"
+              avatar="https://i.pravatar.cc/150?u=a042581f4e29026704d"
             />
+          </div>
+          {isCollapsed && (
+            <Tooltip
+              key="expand-sidebar"
+              content="Expand sidebar"
+              placement="right"
+              closeDelay={0}
+              offset={5}
+            >
+              <CollapseButton
+                isCollapsed={isCollapsed}
+                className="-ml-1.5 absolute bottom-0 items-center justify-center"
+                onToggle={isMobile ? onOpenChange : onToggle}
+              />
+            </Tooltip>
           )}
         </div>
       </SidebarDrawer>
@@ -137,12 +204,39 @@ export default function AppSidebar({ children }: PropsWithChildren) {
 }
 
 type CollapseButtonProps = {
+  isCollapsed: boolean
   className?: string
-  srOnly?: string
   onToggle: () => void
 }
 
-function CollapseButton({ srOnly, onToggle, className }: CollapseButtonProps) {
+function CollapseButton({
+  isCollapsed,
+  onToggle,
+  className,
+}: CollapseButtonProps) {
+  if (isCollapsed) {
+    return (
+      <Tooltip
+        key="expand-sidebar"
+        content="Expand sidebar"
+        placement="right"
+        closeDelay={0}
+        offset={5}
+      >
+        <Button
+          isIconOnly
+          variant="light"
+          radius="full"
+          onPress={onToggle}
+          className={cn('size-8 min-w-0', className)}
+        >
+          <Icon icon="lucide:sidebar" width={18} className="text-default-400" />
+          <span className="sr-only">Expand sidebar</span>
+        </Button>
+      </Tooltip>
+    )
+  }
+
   return (
     <Button
       isIconOnly
@@ -152,7 +246,7 @@ function CollapseButton({ srOnly, onToggle, className }: CollapseButtonProps) {
       className={cn('size-8 min-w-0', className)}
     >
       <Icon icon="lucide:sidebar" width={18} className="text-default-400" />
-      {srOnly && <span className="sr-only">{srOnly}</span>}
+      <span className="sr-only">Collapse sidebar</span>
     </Button>
   )
 }

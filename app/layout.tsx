@@ -6,6 +6,7 @@ import { cn } from '@heroui/react'
 import { Providers } from './providers'
 
 import type { Metadata, Viewport } from 'next'
+import type { ReactNode } from 'react'
 
 export const metadata: Metadata = {
   title: {
@@ -27,7 +28,7 @@ export const viewport: Viewport = {
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: ReactNode
 }) {
   const rootClass = cn(
     'min-h-screen bg-background font-sans antialiased',
@@ -43,6 +44,7 @@ export default function RootLayout({
           themeProps={{
             attribute: 'class',
             defaultTheme: siteConfig.defaultTheme,
+            enableSystem: true,
           }}
         >
           {children}
