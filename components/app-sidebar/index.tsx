@@ -11,34 +11,38 @@ import {
 } from '@radix-ui/react-scroll-area'
 import { useCallback, useState } from 'react'
 
-import Chats from '@/components/app-sidebar/chats'
-import Menu from '@/components/app-sidebar/menu'
 import Wrapper from '@/components/app-sidebar/wrapper'
-import { Logo } from '@/components/icons'
-import { siteConfig } from '@/config/site'
 
 import type { ScrollShadowVisibility } from '@heroui/react'
-import type { PropsWithChildren, UIEventHandler } from 'react'
+import type { PropsWithChildren, ReactNode, UIEventHandler } from 'react'
 
-import CurrentUser from '@/components/app-sidebar/current-user'
 import CollapseButton from './collapse-button'
 import { Context } from './context'
 import NewChat from './new-chat'
+import useAppSidebar from './use-app-sidebar'
 
 type AppSidebarProps = PropsWithChildren<{
-  user?: {
-    avatar?: string
-    name: string
-    email: string
-  }
+  logo: ReactNode
+  nav: ReactNode
+  conversation?: ReactNode
+  user?: ReactNode
+  enableCollapse?: boolean
 }>
 
 export default function AppSidebar(props: AppSidebarProps) {
-  const { children, user } = props
+  const {
+    logo,
+    nav,
+    conversation,
+    user,
+    enableCollapse = true,
+    children,
+  } = props
 
   const [isCollapsed, setIsCollapsed] = useState(() => {
     if (typeof document === 'undefined' || document.cookie === undefined)
       return false
+    if (!enableCollapse) return false
     return document.cookie.includes('sidebar-collapsed=true')
   })
   const [scrollShadowVisibility, setScrollShadowVisibility] =
@@ -98,8 +102,8 @@ export default function AppSidebar(props: AppSidebarProps) {
                 'justify-center pr-1.5': isCollapsed,
               })}
             >
-              <Logo />
-              {!isCollapsed && (
+              {logo}
+              {enableCollapse && !isCollapsed && (
                 <CollapseButton
                   className="!-mr-1.5"
                   onToggle={isMobile ? onOpenChange : onToggle}
@@ -114,7 +118,7 @@ export default function AppSidebar(props: AppSidebarProps) {
               <ScrollArea
                 className={cn(
                   'relative h-full max-h-full w-full overflow-hidden pr-4',
-                  { 'pr-1.5': isCollapsed },
+                  { 'pr-1.5 ': isCollapsed },
                 )}
                 type="always"
               >
@@ -123,8 +127,8 @@ export default function AppSidebar(props: AppSidebarProps) {
                   onScroll={onScroll}
                 >
                   <NewChat />
-                  <Menu items={siteConfig.nav} />
-                  <Chats />
+                  {nav}
+                  {conversation}
                 </ScrollAreaViewport>
                 <ScrollAreaScrollbar
                   className={cn(
@@ -137,17 +141,19 @@ export default function AppSidebar(props: AppSidebarProps) {
                 </ScrollAreaScrollbar>
               </ScrollArea>
             </ScrollShadow>
-            {user && (
+
+            {!!user && (
               <div
                 className={cn(
                   'flex w-full flex-col items-center justify-center gap-y-2 pr-4',
                   { 'pr-1.5': isCollapsed },
                 )}
               >
-                <CurrentUser {...user} />
+                {user}
               </div>
             )}
-            {isCollapsed && (
+
+            {enableCollapse && isCollapsed && (
               <Tooltip
                 key="expand-sidebar"
                 content="Expand sidebar"
@@ -169,3 +175,5 @@ export default function AppSidebar(props: AppSidebarProps) {
     </Context.Provider>
   )
 }
+
+export { useAppSidebar }

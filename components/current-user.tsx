@@ -1,3 +1,5 @@
+'use client'
+
 import {
   Avatar,
   Button,
@@ -11,7 +13,7 @@ import {
 import { Icon } from '@iconify/react'
 
 import ThemeSwitcher from '@/components/theme-switcher'
-import useAppSidebar from './use-app-sidebar'
+import { useAppSidebar } from './app-sidebar'
 
 type CurrentUserProps = {
   avatar?: string

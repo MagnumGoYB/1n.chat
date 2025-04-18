@@ -1,24 +1,29 @@
-import { Listbox, ListboxItem, Tooltip, cn } from '@heroui/react'
+'use client'
+
+import { Listbox, ListboxItem } from '@heroui/listbox'
+import { cn } from '@heroui/react'
+import { Tooltip } from '@heroui/tooltip'
 import { Icon } from '@iconify/react'
 import { useCallback } from 'react'
-import useAppSidebar from './use-app-sidebar'
 
-type MenuItem = {
+import { useAppSidebar } from './app-sidebar'
+
+type SidebarNavItem = {
   key: string
   name: string
   href: string
   icon: string
 }
 
-type MenuProps = {
-  items: MenuItem[]
+type SidebarNavProps = {
+  items: SidebarNavItem[]
 }
 
-export default function Menu({ items }: MenuProps) {
+export default function SidebarNav({ items }: SidebarNavProps) {
   const { isCollapsed } = useAppSidebar()
 
   const content = useCallback(
-    (item: MenuItem) => {
+    (item: SidebarNavItem) => {
       if (!isCollapsed) {
         return (
           <>
