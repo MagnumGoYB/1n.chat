@@ -1,0 +1,80 @@
+{
+  "disableEmoji": false,
+  "format": "{emoji}{type}{scope}: {subject}",
+  "list": [
+    "feat",
+    "fix",
+    "docs",
+    "ci",
+    "style",
+    "refactor",
+    "release",
+    "perf",
+    "test",
+    "chore"
+  ],
+  "maxMessageLength": 64,
+  "minMessageLength": 3,
+  "questions": ["type", "scope", "subject", "body", "breaking", "issues"],
+  "types": {
+    "chore": {
+      "description": "其他类型的更改",
+      "emoji": "🚧",
+      "value": "chore"
+    },
+    "ci": {
+      "description": "CI 相关的更改",
+      "emoji": "👷",
+      "value": "ci"
+    },
+    "docs": {
+      "description": "仅文档更改",
+      "emoji": "📝",
+      "value": "docs"
+    },
+    "feat": {
+      "description": "新功能或特性",
+      "emoji": "✨",
+      "value": "feat"
+    },
+    "fix": {
+      "description": "修复 BUG",
+      "emoji": "🐛",
+      "value": "fix"
+    },
+    "perf": {
+      "description": "性能优化",
+      "emoji": "⚡️",
+      "value": "perf"
+    },
+    "refactor": {
+      "description": "重构代码",
+      "emoji": "♻️",
+      "value": "refactor"
+    },
+    "release": {
+      "description": "发布新版本",
+      "emoji": "🔖",
+      "value": "release"
+    },
+    "style": {
+      "description": "UI 样式相关的更改",
+      "emoji": "🎨",
+      "value": "style"
+    },
+    "test": {
+      "description": "添加测试或修复测试",
+      "emoji": "🧪",
+      "value": "test"
+    },
+    "messages": {
+      "type": "选择您要提交的更改类型:",
+      "customScope": "选择此组件影响的范围:",
+      "subject": "简短描述更改内容:\n",
+      "body": "提供更改的详细描述:\n ",
+      "breaking": "列出所有重大更改:\n",
+      "footer": "列出所有相关的问题，格式: #12, #34",
+      "confirmCommit": "此提交影响的包:\n"
+    }
+  }
+}

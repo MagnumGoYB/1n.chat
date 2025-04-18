@@ -20,10 +20,12 @@ import { siteConfig } from '@/config/site'
 
 import type { ScrollShadowVisibility } from '@heroui/react'
 import type { PropsWithChildren, UIEventHandler } from 'react'
+import SidebarChats from './sidebar-chats'
 
 export default function AppSidebar({ children }: PropsWithChildren) {
   const [isCollapsed, setIsCollapsed] = useState(() => {
-    if (document.cookie === undefined) return false
+    if (typeof document === 'undefined' || document.cookie === undefined)
+      return false
     return document.cookie.includes('sidebar-collapsed=true')
   })
   const [scrollShadowVisibility, setScrollShadowVisibility] =
@@ -103,6 +105,7 @@ export default function AppSidebar({ children }: PropsWithChildren) {
                 'relative h-full max-h-full w-full overflow-hidden pr-4',
                 { 'pr-1.5': isCollapsed },
               )}
+              type="always"
             >
               <ScrollAreaViewport
                 className="h-full w-full rounded-[inherit]"
@@ -140,30 +143,16 @@ export default function AppSidebar({ children }: PropsWithChildren) {
                   )}
                 </div>
                 <SidebarMenu isCollapsed={isCollapsed} items={siteConfig.nav} />
-                <div className="w-full gap-10 break-all py-3">
-                  <p>
-                    Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                    Placeat eum illum atque sint beatae quibusdam exercitationem
-                    similique, molestias eligendi esse. Laborum voluptatum neque
-                    molestias ipsa laudantium! Adipisci nisi sint perspiciatis.
-                  </p>
-                  <p>
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                    Sed impedit, alias libero incidunt delectus aspernatur
-                    necessitatibus ut repellat exercitationem. Consequuntur
-                    quisquam officia nulla doloremque recusandae error nisi
-                    quidem, sunt sint.
-                  </p>
-                </div>
+                <SidebarChats isCollapsed={isCollapsed} />
               </ScrollAreaViewport>
               <ScrollAreaScrollbar
                 className={cn(
-                  'flex h-full w-2.5 touch-none select-none rounded border-l border-l-transparent p-[1px] transition-[colors,width]',
+                  'flex h-full w-2 touch-none select-none rounded border-l border-l-transparent p-[1px] transition-[colors,width]',
                   { 'w-1.5': isCollapsed },
                 )}
                 orientation="vertical"
               >
-                <ScrollAreaThumb className="relative flex-1 rounded-full bg-default-300" />
+                <ScrollAreaThumb className="relative flex-1 rounded-full bg-default-200/60 hover:bg-default-300/60" />
               </ScrollAreaScrollbar>
             </ScrollArea>
           </ScrollShadow>

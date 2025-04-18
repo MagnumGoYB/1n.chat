@@ -1,4 +1,5 @@
 {
+  "typescript.tsdk": "node_modules/typescript/lib",
   "editor.foldingImportsByDefault": true,
   "editor.formatOnSave": true,
   "editor.codeActionsOnSave": {
@@ -8,5 +9,9 @@
     "source.organizeImports.biome": "explicit"
   },
   "editor.defaultFormatter": "biomejs.biome",
-  "typescript.tsdk": "node_modules/typescript/lib"
+  "[css]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
+  "commentTranslate.source": "Bing",
+  "css.customData": [".vscode/tailwindcss.json"]
 }
