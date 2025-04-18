@@ -1,1 +1,8 @@
-commitlint -e $HUSKY_GIT_PARAMS
+commitlint --edit $HUSKY_GIT_PARAMS --config .commitlintrc
+
+if [ $? -ne 0 ]; then
+    echo "Commit message validation failed. Please fix the issues and try again."
+    exit 1
+fi
+
+echo "Commit message validation passed. Proceeding with commit."

@@ -3,13 +3,14 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "preinstall": "npx only-allow pnpm",
+    "preinstall": "only-allow pnpm",
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
     "prepare": "husky || true",
     "lint": "biome lint --write",
-    "format": "biome format --write"
+    "format": "biome format --write",
+    "check": "biome check --no-errors-on-unmatched"
   },
   "dependencies": {
     "@heroui/react": "2.7.5",

@@ -1,0 +1,8 @@
+biome check --no-errors-on-unmatched
+
+if [ $? -ne 0 ]; then
+  echo "Pre-push hook failed. Please fix the issues and try again."
+  exit 1
+fi
+
+echo "Pre-push hook passed. Proceeding with push."

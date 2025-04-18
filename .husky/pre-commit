@@ -1,1 +1,8 @@
 lint-staged
+
+if [ $? -ne 0 ]; then
+    echo "Pre-commit hook failed. Please fix the issues and try again."
+    exit 1
+fi
+
+echo "Pre-commit hook passed. Proceeding with commit."
