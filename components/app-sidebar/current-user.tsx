@@ -11,20 +11,17 @@ import {
 import { Icon } from '@iconify/react'
 
 import ThemeSwitcher from '@/components/theme-switcher'
+import useAppSidebar from './use-app-sidebar'
 
-type SidebarUserProps = {
-  isCollapsed: boolean
+type CurrentUserProps = {
   avatar?: string
   name: string
   email: string
 }
 
-export default function SidebarUser({
-  isCollapsed,
-  avatar,
-  name,
-  email,
-}: SidebarUserProps) {
+export default function CurrentUser({ avatar, name, email }: CurrentUserProps) {
+  const { isCollapsed } = useAppSidebar()
+
   return (
     <Dropdown>
       <DropdownTrigger>

@@ -1,5 +1,3 @@
-'use client'
-
 import { TRANSITION_EASINGS } from '@heroui/framer-utils'
 import { Drawer, DrawerBody, DrawerContent, cn } from '@heroui/react'
 import { forwardRef, useMemo } from 'react'
@@ -7,7 +5,7 @@ import { forwardRef, useMemo } from 'react'
 import type { ModalProps } from '@heroui/react'
 import type { CSSProperties } from 'react'
 
-const SidebarDrawer = forwardRef<
+const Wrapper = forwardRef<
   HTMLDivElement,
   ModalProps & {
     sidebarWidth?: number
@@ -107,6 +105,6 @@ const SidebarDrawer = forwardRef<
   },
 )
 
-SidebarDrawer.displayName = 'SidebarDrawer'
+Wrapper.displayName = 'Wrapper'
 
-export default SidebarDrawer
+export default Wrapper
