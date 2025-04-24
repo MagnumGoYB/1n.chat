@@ -1,5 +1,4 @@
 import { Button, Tooltip } from '@heroui/react'
-import { Icon } from '@iconify/react'
 
 import useAppSidebar from './use-app-sidebar'
 
@@ -24,7 +23,7 @@ export default function NewChat() {
             className="size-9 min-w-0 border bg-white font-medium dark:border-default-200 dark:bg-default-100"
             radius="full"
           >
-            <Icon icon="lucide:plus" width={22} height={22} />
+            <span className="iconify lucide--plus size-[22px]" />
           </Button>
         </Tooltip>
       ) : (

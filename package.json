@@ -30,7 +30,8 @@
   "devDependencies": {
     "@biomejs/biome": "^1.9.4",
     "@commitlint/cli": "^19.8.0",
-    "@iconify/react": "^5.2.1",
+    "@iconify/json": "^2.2.331",
+    "@iconify/tailwind": "^1.2.0",
     "@react-types/shared": "^3.29.0",
     "@types/node": "^22.14.1",
     "@types/react": "18.3.1",

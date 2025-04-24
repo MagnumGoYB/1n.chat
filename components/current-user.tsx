@@ -10,7 +10,6 @@ import {
   User,
   cn,
 } from '@heroui/react'
-import { Icon } from '@iconify/react'
 
 import ThemeSwitcher from '@/components/theme-switcher'
 import { useAppSidebar } from './app-sidebar'
@@ -60,7 +59,7 @@ export default function CurrentUser({ avatar, name, email }: CurrentUserProps) {
         <DropdownItem
           key="settings"
           textValue="Settings"
-          endContent={<Icon icon="lucide:settings" />}
+          endContent={<span className="iconify lucide--settings" />}
         >
           Settings
         </DropdownItem>
@@ -75,7 +74,7 @@ export default function CurrentUser({ avatar, name, email }: CurrentUserProps) {
         <DropdownItem
           key="logout"
           textValue="Logout"
-          endContent={<Icon icon="lucide:log-out" />}
+          endContent={<span className="iconify lucide--log-out" />}
         >
           Logout
         </DropdownItem>

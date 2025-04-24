@@ -1,7 +1,6 @@
 'use client'
 
 import { RadioGroup, cn, useRadio } from '@heroui/react'
-import { Icon } from '@iconify/react'
 import { useIsSSR } from '@react-aria/ssr'
 import { VisuallyHidden } from '@react-aria/visually-hidden'
 import { useTheme } from 'next-themes'
@@ -24,13 +23,13 @@ export default function ThemeSwitcher() {
       aria-label="Switch theme"
     >
       <ThemeRadio value="system">
-        <Icon icon="tabler:device-desktop" />
+        <span className="iconify tabler--device-desktop" />
       </ThemeRadio>
       <ThemeRadio value="light">
-        <Icon icon="tabler:sun-high" />
+        <span className="iconify tabler--sun-high" />
       </ThemeRadio>
       <ThemeRadio value="dark">
-        <Icon icon="tabler:moon" />
+        <span className="iconify tabler--moon" />
       </ThemeRadio>
     </RadioGroup>
   )

@@ -1,7 +1,6 @@
 'use client'
 
 import { Button, Tooltip, cn } from '@heroui/react'
-import { Icon } from '@iconify/react'
 import useAppSidebar from './use-app-sidebar'
 
 type CollapseButtonProps = {
@@ -31,7 +30,7 @@ export default function CollapseButton({
         onPress={onToggle}
         className={cn('size-8 min-w-0', className)}
       >
-        <Icon icon="lucide:sidebar" width={18} className="text-default-400" />
+        <span className="iconify lucide--sidebar size-[18px] text-default-400" />
         <span className="sr-only">{tooltipContent}</span>
       </Button>
     </Tooltip>

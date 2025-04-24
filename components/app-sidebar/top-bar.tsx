@@ -2,7 +2,6 @@
 
 import { siteConfig } from '@/config/site'
 import { Link } from '@heroui/react'
-import { Icon } from '@iconify/react'
 import { usePathname } from 'next/navigation'
 import type { FC } from 'react'
 
@@ -33,11 +32,7 @@ const TopBar: FC = () => {
       className="h-8 flex-1 space-x-2 overflow-hidden px-2"
       title={title()}
     >
-      <Icon
-        icon="lucide:chevron-left"
-        className="text-default-400"
-        width={18}
-      />
+      <span className="iconify lucide--chevron-left size-[18px] text-default-400" />
       <span className="flex-1 overflow-hidden text-ellipsis whitespace-nowrap font-medium text-foreground text-sm">
         {title()}
       </span>

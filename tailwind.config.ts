@@ -1,10 +1,12 @@
 import { heroui } from '@heroui/theme'
+import { addIconSelectors } from '@iconify/tailwind'
 import type { Config } from 'tailwindcss/types/config'
 
 export default {
   content: [
     './components/**/*.{js,ts,jsx,tsx,mdx}',
     './app/**/*.{js,ts,jsx,tsx,mdx}',
+    './config/**/*.ts',
     './node_modules/@heroui/theme/dist/**/*.{js,ts,jsx,tsx}',
   ],
   theme: {
@@ -19,5 +21,5 @@ export default {
     },
   },
   darkMode: 'class',
-  plugins: [heroui()],
+  plugins: [heroui(), addIconSelectors(['lucide', 'tabler'])],
 } satisfies Config

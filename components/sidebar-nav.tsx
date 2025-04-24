@@ -3,7 +3,6 @@
 import { Listbox, ListboxItem } from '@heroui/listbox'
 import { cn } from '@heroui/react'
 import { Tooltip } from '@heroui/tooltip'
-import { Icon } from '@iconify/react'
 import { useCallback, useMemo } from 'react'
 
 import { usePathname, useSelectedLayoutSegment } from 'next/navigation'
@@ -41,7 +40,7 @@ export default function SidebarNav({ items }: SidebarNavProps) {
       if (!isCollapsed) {
         return (
           <>
-            <Icon width={18} icon={item.icon} />
+            <span className={cn('iconify size-[18px]', item.icon)} />
             <span className="truncate font-medium">{item.name}</span>
           </>
         )
@@ -56,7 +55,7 @@ export default function SidebarNav({ items }: SidebarNavProps) {
           offset={5}
         >
           <div className="flex h-full w-full items-center justify-center">
-            <Icon width={18} icon={item.icon} />
+            <span className={cn('iconify size-[18px]', item.icon)} />
           </div>
         </Tooltip>
       )
