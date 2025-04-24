@@ -124,7 +124,7 @@ export default function AppSidebar(props: AppSidebarProps) {
                 >
                   <NewChat />
                   {nav}
-                  {!isSubPath && conversation}
+                  {conversation}
                 </ScrollAreaViewport>
                 <ScrollAreaScrollbar
                   className={cn(

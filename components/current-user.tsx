@@ -10,21 +10,47 @@ import {
   User,
   cn,
 } from '@heroui/react'
+import type { Key } from 'react'
 
 import ThemeSwitcher from '@/components/theme-switcher'
+import { useRouter } from 'next/navigation'
 import { useAppSidebar } from './app-sidebar'
 
 type CurrentUserProps = {
   avatar?: string
   name: string
   email: string
+  onAction?: (key: Key) => void
 }
 
-export default function CurrentUser({ avatar, name, email }: CurrentUserProps) {
+export default function CurrentUser({
+  avatar,
+  name,
+  email,
+  onAction,
+}: CurrentUserProps) {
+  const router = useRouter()
   const { isCollapsed } = useAppSidebar()
 
+  const handleAction = (key: Key) => {
+    onAction?.(key)
+    switch (key) {
+      case 'settings':
+      case 'profile': {
+        router.push('/settings')
+        break
+      }
+    }
+  }
+
   return (
-    <Dropdown>
+    <Dropdown
+      onOpenChange={(isOpen) => {
+        if (isOpen) {
+          router.prefetch('/settings')
+        }
+      }}
+    >
       <DropdownTrigger>
         <Button
           disableRipple
@@ -44,7 +70,12 @@ export default function CurrentUser({ avatar, name, email }: CurrentUserProps) {
           )}
         </Button>
       </DropdownTrigger>
-      <DropdownMenu variant="flat" aria-label="User menu">
+      <DropdownMenu
+        variant="flat"
+        aria-label="User menu"
+        selectionMode="single"
+        onAction={handleAction}
+      >
         <DropdownItem key="profile" textValue="Profile">
           <User
             classNames={{

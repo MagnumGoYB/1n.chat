@@ -82,6 +82,9 @@ export default function SidebarNav({ items }: SidebarNavProps) {
               'bg-default-200/80 text-foreground',
           )}
           onFocus={(e) => e.stopPropagation()}
+          onMouseEnter={() => {
+            router.prefetch(item.href)
+          }}
           onPress={() => {
             router.push(item.href)
           }}

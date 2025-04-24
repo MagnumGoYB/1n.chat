@@ -5,16 +5,16 @@ export const SideBarMotionVariants = {
     opacity: 1,
     x: 0,
     transition: {
+      type: 'tween',
       duration: 0.15,
-      ease: 'easeInOut',
     },
   },
   hidden: {
     opacity: 0,
-    x: -5,
+    x: -10,
     transition: {
-      duration: 0.15,
-      ease: 'easeInOut',
+      type: 'tween',
+      duration: 0.08,
     },
   },
 } satisfies Variants
