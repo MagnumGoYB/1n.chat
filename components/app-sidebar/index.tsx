@@ -1,6 +1,9 @@
 'use client'
 
-import { ScrollShadow, Tooltip, cn } from '@heroui/react'
+import type { ScrollShadowVisibility } from '@heroui/react'
+import type { PropsWithChildren, ReactNode, UIEventHandler } from 'react'
+
+import { Link, ScrollShadow, cn } from '@heroui/react'
 import { useDisclosure } from '@heroui/use-disclosure'
 import { useIsMobile } from '@heroui/use-is-mobile'
 import {
@@ -11,18 +14,16 @@ import {
 } from '@radix-ui/react-scroll-area'
 import { useCallback, useState } from 'react'
 
-import Wrapper from '@/components/app-sidebar/wrapper'
-
-import type { ScrollShadowVisibility } from '@heroui/react'
-import type { PropsWithChildren, ReactNode, UIEventHandler } from 'react'
-
+import { Logo } from '../icons'
 import CollapseButton from './collapse-button'
 import { Context } from './context'
 import NewChat from './new-chat'
+import TopBar from './top-bar'
 import useAppSidebar from './use-app-sidebar'
+import useIsSubPath from './use-is-sub-path'
+import Wrapper from './wrapper'
 
 type AppSidebarProps = PropsWithChildren<{
-  logo: ReactNode
   nav: ReactNode
   conversation?: ReactNode
   user?: ReactNode
@@ -30,14 +31,7 @@ type AppSidebarProps = PropsWithChildren<{
 }>
 
 export default function AppSidebar(props: AppSidebarProps) {
-  const {
-    logo,
-    nav,
-    conversation,
-    user,
-    enableCollapse = true,
-    children,
-  } = props
+  const { nav, conversation, user, enableCollapse = true, children } = props
 
   const [isCollapsed, setIsCollapsed] = useState(() => {
     if (typeof document === 'undefined' || document.cookie === undefined)
@@ -50,6 +44,7 @@ export default function AppSidebar(props: AppSidebarProps) {
 
   const isMobile = useIsMobile()
   const { isOpen, onOpenChange } = useDisclosure()
+  const [isSubPath, parentNavName] = useIsSubPath()
 
   const onToggle = useCallback(() => {
     setIsCollapsed((prev) => {
@@ -80,7 +75,9 @@ export default function AppSidebar(props: AppSidebarProps) {
   }, [])
 
   return (
-    <Context.Provider value={{ isCollapsed, setIsCollapsed }}>
+    <Context.Provider
+      value={{ isCollapsed, setIsCollapsed, isSubPath, parentNavName }}
+    >
       <div className="flex h-dvh w-full">
         <Wrapper
           className={cn(
@@ -100,9 +97,16 @@ export default function AppSidebar(props: AppSidebarProps) {
             <div
               className={cn('flex w-full items-center justify-between pr-4', {
                 'justify-center pr-1.5': isCollapsed,
+                'items-start': isSubPath,
               })}
             >
-              {logo}
+              {isSubPath ? (
+                <TopBar />
+              ) : (
+                <Link href="/" color="foreground">
+                  <Logo />
+                </Link>
+              )}
               {enableCollapse && !isCollapsed && (
                 <CollapseButton
                   className="!-mr-1.5"
@@ -126,9 +130,9 @@ export default function AppSidebar(props: AppSidebarProps) {
                   className="h-full w-full rounded-[inherit]"
                   onScroll={onScroll}
                 >
-                  <NewChat />
+                  {!isSubPath && <NewChat />}
                   {nav}
-                  {conversation}
+                  {!isSubPath && conversation}
                 </ScrollAreaViewport>
                 <ScrollAreaScrollbar
                   className={cn(
@@ -154,23 +158,17 @@ export default function AppSidebar(props: AppSidebarProps) {
             )}
 
             {enableCollapse && isCollapsed && (
-              <Tooltip
-                key="expand-sidebar"
-                content="Expand sidebar"
-                placement="right"
-                closeDelay={0}
-                offset={5}
-              >
-                <CollapseButton
-                  className="-ml-1.5 absolute bottom-0 items-center justify-center"
-                  onToggle={isMobile ? onOpenChange : onToggle}
-                />
-              </Tooltip>
+              <CollapseButton
+                className="-ml-1.5 absolute bottom-0 items-center justify-center"
+                onToggle={isMobile ? onOpenChange : onToggle}
+              />
             )}
           </div>
         </Wrapper>
 
-        <div className="flex w-full flex-1 flex-col">{children}</div>
+        <div className="flex h-dvh w-full flex-1 flex-col overflow-auto">
+          {children}
+        </div>
       </div>
     </Context.Provider>
   )

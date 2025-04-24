@@ -1,6 +1,6 @@
-import { Link } from '@heroui/link'
-
 import { subtitle, title } from '@/components/primitives'
+import { Button } from '@heroui/button'
+import { Link } from '@heroui/link'
 
 export default function NotFound() {
   return (
@@ -13,9 +13,9 @@ export default function NotFound() {
       >
         Could not find requested resource
       </h4>
-      <Link href="/" color="foreground">
-        Return Home
-      </Link>
+      <Button as={Link} color="warning" href="/" variant="ghost">
+        Back
+      </Button>
     </div>
   )
 }

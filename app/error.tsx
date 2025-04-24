@@ -20,7 +20,7 @@ export default function Error({
       <h2 className={title({ color: 'violet', className: '!leading-normal' })}>
         Something went wrong!
       </h2>
-      <Button variant="shadow" color="secondary" onPress={() => reset()}>
+      <Button variant="ghost" color="secondary" onPress={() => reset()}>
         Try again
       </Button>
     </div>

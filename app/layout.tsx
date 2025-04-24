@@ -8,6 +8,11 @@ import { Providers } from './providers'
 import type { Metadata, Viewport } from 'next'
 import type { ReactNode } from 'react'
 
+import AppSidebar from '@/components/app-sidebar'
+import Conversations from '@/components/conversations'
+import CurrentUser from '@/components/current-user'
+import SidebarNav from '@/components/sidebar-nav'
+
 export const metadata: Metadata = {
   title: {
     default: siteConfig.name,
@@ -47,7 +52,19 @@ export default function RootLayout({
             enableSystem: true,
           }}
         >
-          {children}
+          <AppSidebar
+            nav={<SidebarNav items={siteConfig.nav} />}
+            conversation={<Conversations />}
+            user={
+              <CurrentUser
+                name="Admin"
+                email="admin@example.com"
+                avatar="https://i.pravatar.cc/150?u=a042581f4e29026704d"
+              />
+            }
+          >
+            {children}
+          </AppSidebar>
         </Providers>
       </body>
     </html>
