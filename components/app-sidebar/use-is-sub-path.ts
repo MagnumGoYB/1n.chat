@@ -5,7 +5,7 @@ import { siteConfig } from '@/config/site'
 
 export default function useIsSubPath(): [boolean, string?] {
   const pathname = usePathname()
-  return useMemo(() => {
+  const [is, parent] = useMemo(() => {
     if (pathname === '/') return [false]
 
     const path = pathname.split('/')
@@ -30,4 +30,6 @@ export default function useIsSubPath(): [boolean, string?] {
 
     return [false]
   }, [pathname])
+
+  return [is, parent]
 }

@@ -3,9 +3,15 @@
 import { Listbox, ListboxItem } from '@heroui/listbox'
 import { cn } from '@heroui/react'
 import { Tooltip } from '@heroui/tooltip'
+import { AnimatePresence, motion } from 'motion/react'
 import { useCallback, useMemo } from 'react'
 
-import { usePathname, useSelectedLayoutSegment } from 'next/navigation'
+import { SideBarMotionVariants } from '@/lib/motion-variants'
+import {
+  usePathname,
+  useRouter,
+  useSelectedLayoutSegment,
+} from 'next/navigation'
 import { useAppSidebar } from './app-sidebar'
 
 type SidebarNavItem = {
@@ -23,6 +29,7 @@ type SidebarNavProps = {
 export default function SidebarNav({ items }: SidebarNavProps) {
   const segment = useSelectedLayoutSegment()
   const pathname = usePathname()
+  const router = useRouter()
   const { isCollapsed, isSubPath, parentNavName } = useAppSidebar()
 
   const subItems = useMemo(
@@ -68,12 +75,16 @@ export default function SidebarNav({ items }: SidebarNavProps) {
       return (
         <ListboxItem
           key={item.key}
-          href={item.href}
+          tabIndex={-1}
           className={cn(
             'h-9 w-full p-0 text-default-500 outline-none transition-[color,background] duration-75 hover:bg-default-200/80 hover:text-foreground',
             (segment === item.key || item.href === pathname) &&
               'bg-default-200/80 text-foreground',
           )}
+          onFocus={(e) => e.stopPropagation()}
+          onPress={() => {
+            router.push(item.href)
+          }}
           classNames={{
             title: cn('flex items-center gap-2.5 px-3', {
               'justify-center px-0 h-full': isCollapsed,
@@ -85,7 +96,7 @@ export default function SidebarNav({ items }: SidebarNavProps) {
         </ListboxItem>
       )
     },
-    [content, isCollapsed, segment, pathname],
+    [content, isCollapsed, segment, pathname, router],
   )
 
   return (
@@ -95,13 +106,43 @@ export default function SidebarNav({ items }: SidebarNavProps) {
         'mt-3': isSubPath,
       })}
     >
-      <Listbox className="p-0" variant="flat" aria-label="Sidebar menu">
+      <AnimatePresence initial={false} mode="popLayout">
         {isSubPath && subItems.length > 0 ? (
-          <>{subItems.map(listItem)}</>
+          <motion.div
+            key="sub-nav"
+            variants={SideBarMotionVariants}
+            animate={SideBarMotionVariants.visible}
+            initial={SideBarMotionVariants.hidden}
+            exit={SideBarMotionVariants.hidden}
+          >
+            <Listbox
+              className="p-0"
+              variant="flat"
+              aria-label={`Sidebar menu by ${parentNavName}`}
+              selectionMode="none"
+            >
+              {subItems.map(listItem)}
+            </Listbox>
+          </motion.div>
         ) : (
-          <>{items.map(listItem)}</>
+          <motion.div
+            key="main-nav"
+            variants={SideBarMotionVariants}
+            animate={SideBarMotionVariants.visible}
+            initial={SideBarMotionVariants.hidden}
+            exit={SideBarMotionVariants.hidden}
+          >
+            <Listbox
+              className="p-0"
+              variant="flat"
+              aria-label="Sidebar menu"
+              selectionMode="none"
+            >
+              {items.map(listItem)}
+            </Listbox>
+          </motion.div>
         )}
-      </Listbox>
+      </AnimatePresence>
     </div>
   )
 }

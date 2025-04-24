@@ -2,42 +2,78 @@
 
 import { siteConfig } from '@/config/site'
 import { Link } from '@heroui/react'
+import { AnimatePresence, motion } from 'motion/react'
 import { usePathname } from 'next/navigation'
-import type { FC } from 'react'
+import { type FC, memo } from 'react'
 
-const TopBar: FC = () => {
-  const pathname = usePathname()
+import { Logo } from '@/components/icons'
+import { SideBarMotionVariants } from '@/lib/motion-variants'
+import useAppSidebar from './use-app-sidebar'
 
-  const title = () => {
-    let value = ''
-    for (const item of siteConfig.nav) {
-      if (item.href === pathname) {
-        value = item.name
-      }
-      if (item.children) {
-        for (const child of item.children) {
-          if (child.href === pathname) {
-            value = item.name
-          }
+const getTitle = (pathname: string) => {
+  let value = ''
+  for (const item of siteConfig.nav) {
+    if (item.href === pathname) {
+      value = item.name
+    }
+    if (item.children) {
+      for (const child of item.children) {
+        if (child.href === pathname) {
+          value = item.name
         }
       }
     }
-    return value
   }
+  return value
+}
+
+const TopBar: FC = memo(() => {
+  const pathname = usePathname()
+  const { isSubPath, isCollapsed } = useAppSidebar()
+
+  const title = getTitle(pathname)
 
   return (
-    <Link
-      href="/"
-      color="foreground"
-      className="h-8 flex-1 space-x-2 overflow-hidden px-2"
-      title={title()}
-    >
-      <span className="iconify lucide--chevron-left size-[18px] text-default-400" />
-      <span className="flex-1 overflow-hidden text-ellipsis whitespace-nowrap font-medium text-foreground text-sm">
-        {title()}
-      </span>
-    </Link>
+    <AnimatePresence initial={false} mode="popLayout">
+      {isSubPath ? (
+        <motion.span
+          variants={SideBarMotionVariants}
+          animate={SideBarMotionVariants.visible}
+          initial={SideBarMotionVariants.hidden}
+          exit={SideBarMotionVariants.hidden}
+          key="top-bar"
+          className="h-8"
+        >
+          <Link
+            href="/"
+            color="foreground"
+            className="group h-full flex-1 space-x-2 overflow-hidden px-2"
+            title={title}
+          >
+            <span className="iconify lucide--chevron-left group-hover:-translate-x-0.5 size-[18px] text-default-400 transition-transform duration-150" />
+            {!isCollapsed && (
+              <span className="flex-1 overflow-hidden text-ellipsis whitespace-nowrap font-medium text-foreground text-sm">
+                {title}
+              </span>
+            )}
+          </Link>
+        </motion.span>
+      ) : (
+        <motion.span
+          variants={SideBarMotionVariants}
+          animate={SideBarMotionVariants.visible}
+          initial={SideBarMotionVariants.hidden}
+          exit={SideBarMotionVariants.hidden}
+          key="logo"
+          className="h-8"
+        >
+          <Link href="/" color="foreground">
+            <Logo />
+          </Link>
+        </motion.span>
+      )}
+    </AnimatePresence>
   )
-}
+})
 
 export default TopBar

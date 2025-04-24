@@ -1,9 +1,7 @@
 'use client'
 
 import type { ScrollShadowVisibility } from '@heroui/react'
-import type { PropsWithChildren, ReactNode, UIEventHandler } from 'react'
-
-import { Link, ScrollShadow, cn } from '@heroui/react'
+import { ScrollShadow, cn } from '@heroui/react'
 import { useDisclosure } from '@heroui/use-disclosure'
 import { useIsMobile } from '@heroui/use-is-mobile'
 import {
@@ -12,9 +10,9 @@ import {
   ScrollAreaThumb,
   ScrollAreaViewport,
 } from '@radix-ui/react-scroll-area'
+import type { PropsWithChildren, ReactNode, UIEventHandler } from 'react'
 import { useCallback, useState } from 'react'
 
-import { Logo } from '../icons'
 import CollapseButton from './collapse-button'
 import { Context } from './context'
 import NewChat from './new-chat'
@@ -100,13 +98,7 @@ export default function AppSidebar(props: AppSidebarProps) {
                 'items-start': isSubPath,
               })}
             >
-              {isSubPath ? (
-                <TopBar />
-              ) : (
-                <Link href="/" color="foreground">
-                  <Logo />
-                </Link>
-              )}
+              <TopBar />
               {enableCollapse && !isCollapsed && (
                 <CollapseButton
                   className="!-mr-1.5"
@@ -130,7 +122,7 @@ export default function AppSidebar(props: AppSidebarProps) {
                   className="h-full w-full rounded-[inherit]"
                   onScroll={onScroll}
                 >
-                  {!isSubPath && <NewChat />}
+                  <NewChat />
                   {nav}
                   {!isSubPath && conversation}
                 </ScrollAreaViewport>

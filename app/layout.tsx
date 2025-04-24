@@ -3,7 +3,6 @@ import '@/styles/globals.css'
 import { inter, roboto_mono } from '@/config/fonts'
 import { siteConfig } from '@/config/site'
 import { cn } from '@heroui/react'
-import { Providers } from './providers'
 
 import type { Metadata, Viewport } from 'next'
 import type { ReactNode } from 'react'
@@ -12,6 +11,7 @@ import AppSidebar from '@/components/app-sidebar'
 import Conversations from '@/components/conversations'
 import CurrentUser from '@/components/current-user'
 import SidebarNav from '@/components/sidebar-nav'
+import { Providers } from './providers'
 
 export const metadata: Metadata = {
   title: {
