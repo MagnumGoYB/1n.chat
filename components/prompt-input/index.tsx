@@ -1,7 +1,8 @@
 'use client'
 
-import { Button, type TextAreaProps, Textarea, cn } from '@heroui/react'
 import type { FC } from 'react'
+
+import { Button, type TextAreaProps, Textarea, cn } from '@heroui/react'
 import { useState } from 'react'
 
 import type { ModelItem } from '@/components/model-switcher/types'

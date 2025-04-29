@@ -4,7 +4,7 @@ import type { ReactNode } from 'react'
 import { cn } from '@heroui/react'
 
 import AppSidebar from '@/components/app-sidebar'
-import Conversations from '@/components/conversations'
+import Conversation from '@/components/conversation'
 import SidebarNav from '@/components/sidebar-nav'
 import { inter, roboto_mono } from '@/config/fonts'
 import { siteConfig } from '@/config/site'
@@ -64,7 +64,7 @@ export default async function RootLayout({
         >
           <AppSidebar
             nav={<SidebarNav />}
-            conversation={<Conversations />}
+            conversation={<Conversation />}
             user={user}
           >
             {children}
