@@ -67,11 +67,12 @@ const PromptInput: FC<PromptInputProps> = (props) => {
         classNames={{
           mainWrapper: 'w-full',
           inputWrapper: '!bg-transparent shadow-none',
-          input: 'px-0.5 pt-1',
+          input: 'scrollbar-hide px-0.5 pt-1',
         }}
         placeholder="Type your message here..."
         size="lg"
         minRows={2}
+        maxRows={8}
         onValueChange={setValue}
         value={value}
         {...textareaProps}

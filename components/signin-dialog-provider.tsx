@@ -62,16 +62,16 @@ export const SignInDialogProvider = ({ children }: PropsWithChildren) => {
         onOpenChange={onOpenChange}
         classNames={{
           backdrop: 'bg-overlay/50',
-          body: 'px-8 pb-12',
-          header: 'px-8 pt-8',
+          body: 'items-center gap-4 px-8 py-0 pb-12',
+          header: 'flex flex-col items-center px-8 pt-8',
         }}
       >
         <ModalContent>
-          <ModalHeader className="flex flex-col items-center">
+          <ModalHeader>
             <Logo className="size-16" />
             <h1 className="font-bold text-3xl">Start for Free</h1>
           </ModalHeader>
-          <ModalBody className="items-center gap-4">
+          <ModalBody>
             <Button
               variant="flat"
               size="lg"
