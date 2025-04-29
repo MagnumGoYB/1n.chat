@@ -31,7 +31,7 @@
           "fix": "safe",
           "level": "warn",
           "options": {
-            "attributes": ["classList"],
+            "attributes": ["classList", "classNames"],
             "functions": ["clsx", "cva", "tw", "tw.*"]
           }
         }

@@ -13,6 +13,7 @@ import {
 import type { Key } from 'react'
 
 import ThemeSwitcher from '@/components/theme-switcher'
+import { signOut } from '@/lib/actions/user'
 import { useRouter } from 'next/navigation'
 import { useAppSidebar } from './app-sidebar'
 
@@ -32,12 +33,25 @@ export default function CurrentUser({
   const router = useRouter()
   const { isCollapsed } = useAppSidebar()
 
-  const handleAction = (key: Key) => {
+  const logout = async () => {
+    try {
+      await signOut()
+      router.push('/')
+    } catch (error) {
+      console.error('Logout error:', error)
+    }
+  }
+
+  const handleAction = async (key: Key) => {
     onAction?.(key)
     switch (key) {
       case 'settings':
       case 'profile': {
         router.push('/settings')
+        break
+      }
+      case 'logout': {
+        logout()
         break
       }
     }

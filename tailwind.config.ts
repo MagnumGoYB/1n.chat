@@ -21,5 +21,5 @@ export default {
     },
   },
   darkMode: 'class',
-  plugins: [heroui(), addIconSelectors(['lucide', 'tabler'])],
+  plugins: [heroui(), addIconSelectors(['lucide', 'tabler', 'logos'])],
 } satisfies Config

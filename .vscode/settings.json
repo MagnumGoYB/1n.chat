@@ -9,9 +9,12 @@
     "source.organizeImports.biome": "explicit"
   },
   "editor.defaultFormatter": "biomejs.biome",
+  "commentTranslate.source": "Bing",
+  "css.customData": [".vscode/tailwindcss.json"],
   "[css]": {
     "editor.defaultFormatter": "biomejs.biome"
   },
-  "commentTranslate.source": "Bing",
-  "css.customData": [".vscode/tailwindcss.json"]
+  "[svg]": {
+    "editor.defaultFormatter": "jock.svg"
+  }
 }

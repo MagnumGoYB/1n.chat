@@ -1,6 +1,6 @@
 'use client'
 
-import { siteConfig } from '@/config/site'
+import { navConfig } from '@/config/nav'
 import { Link } from '@heroui/react'
 import { AnimatePresence, motion } from 'motion/react'
 import { usePathname } from 'next/navigation'
@@ -12,7 +12,7 @@ import useAppSidebar from './use-app-sidebar'
 
 const getTitle = (pathname: string) => {
   let value = ''
-  for (const item of siteConfig.nav) {
+  for (const item of navConfig) {
     if (item.href === pathname) {
       value = item.name
     }

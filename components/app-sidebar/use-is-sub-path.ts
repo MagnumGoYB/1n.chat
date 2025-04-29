@@ -1,7 +1,7 @@
 import { usePathname } from 'next/navigation'
 import { useMemo } from 'react'
 
-import { siteConfig } from '@/config/site'
+import { navConfig } from '@/config/nav'
 
 export default function useIsSubPath(): [boolean, string?] {
   const pathname = usePathname()
@@ -12,7 +12,7 @@ export default function useIsSubPath(): [boolean, string?] {
 
     if (path.every((p) => p === '')) return [false]
 
-    const current = siteConfig.nav.find((item) => item.key === path[1])
+    const current = navConfig.find((item) => item.key === path[1])
 
     if (current) {
       if (!current.children) return [false]

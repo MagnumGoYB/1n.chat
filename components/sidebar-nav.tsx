@@ -6,6 +6,7 @@ import { Tooltip } from '@heroui/tooltip'
 import { AnimatePresence, motion } from 'motion/react'
 import { useCallback, useMemo } from 'react'
 
+import { navConfig } from '@/config/nav'
 import { SideBarMotionVariants } from '@/lib/motion-variants'
 import {
   usePathname,
@@ -22,11 +23,7 @@ type SidebarNavItem = {
   children?: SidebarNavItem[]
 }
 
-type SidebarNavProps = {
-  items: SidebarNavItem[]
-}
-
-export default function SidebarNav({ items }: SidebarNavProps) {
+export default function SidebarNav() {
   const segment = useSelectedLayoutSegment()
   const pathname = usePathname()
   const router = useRouter()
@@ -35,11 +32,11 @@ export default function SidebarNav({ items }: SidebarNavProps) {
   const subItems = useMemo(
     () =>
       isSubPath
-        ? (items
+        ? (navConfig
             .filter((it) => it.children?.length)
             .find((it) => it.name === parentNavName)?.children ?? [])
         : [],
-    [isSubPath, items, parentNavName],
+    [isSubPath, parentNavName],
   )
 
   const content = useCallback(
@@ -90,7 +87,7 @@ export default function SidebarNav({ items }: SidebarNavProps) {
           }}
           classNames={{
             title: cn('flex items-center gap-2.5 px-3', {
-              'justify-center px-0 h-full': isCollapsed,
+              'h-full justify-center px-0': isCollapsed,
             }),
           }}
           textValue={item.name}
@@ -141,7 +138,7 @@ export default function SidebarNav({ items }: SidebarNavProps) {
               aria-label="Sidebar menu"
               selectionMode="none"
             >
-              {items.map(listItem)}
+              {navConfig.map(listItem)}
             </Listbox>
           </motion.div>
         )}
