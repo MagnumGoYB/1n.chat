@@ -68,13 +68,13 @@ const Wrapper = forwardRef<
               '!items-end !justify-end': sidebarPlacement === 'right',
             }),
             base: cn(
-              'w-[var(--sidebar-width)] !m-0 p-0 h-full max-h-full',
+              '!m-0 h-full max-h-full w-[var(--sidebar-width)] p-0',
               classNames?.base,
               className,
               {
-                'inset-y-0 left-0 max-h-[none] rounded-l-none !justify-start':
+                '!justify-start inset-y-0 left-0 max-h-[none] rounded-l-none':
                   sidebarPlacement === 'left',
-                'inset-y-0 right-0 max-h-[none] rounded-r-none !justify-end':
+                '!justify-end inset-y-0 right-0 max-h-[none] rounded-r-none':
                   sidebarPlacement === 'right',
               },
             ),
