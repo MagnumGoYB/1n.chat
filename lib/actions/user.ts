@@ -17,6 +17,7 @@ export async function signIn(id: string) {
   }
   const cookieStore = await cookies()
   cookieStore.set(sessionKey, id, {
+    httpOnly: true,
     sameSite: 'lax',
     expires: new Date(Date.now() + 60 * 60 * 1000), // 1 hour
   })

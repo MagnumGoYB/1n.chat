@@ -50,10 +50,11 @@ export default function ConversationItem({
         <DropdownTrigger>
           <Button
             isIconOnly
+            disableRipple
             variant="light"
             radius="full"
             size="sm"
-            className="-translate-y-1/2 absolute top-1/2 right-0 text-default-700 opacity-0 hover:opacity-100 peer-hover:opacity-100"
+            className="-translate-y-1/2 absolute top-1/2 right-0 text-default-500 opacity-0 hover:opacity-100 peer-hover:opacity-100 data-[hover=true]:bg-transparent data-[hover=true]:text-default-700"
           >
             <span className="iconify lucide--more-horizontal size-4" />
           </Button>

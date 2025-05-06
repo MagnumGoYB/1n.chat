@@ -6,4 +6,5 @@ const version = siteConfig.version
 
 export const authConfig = {
   sessionKey: `v${version}-session`,
+  publicPaths: [],
 }
