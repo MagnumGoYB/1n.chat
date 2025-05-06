@@ -16,6 +16,17 @@
   "maxMessageLength": 64,
   "minMessageLength": 3,
   "questions": ["type", "scope", "subject", "body", "breaking", "issues"],
+  "scopes": [
+    "components",
+    "hooks",
+    "utils",
+    "styles",
+    "docs",
+    "tests",
+    "config",
+    "deps",
+    "build"
+  ],
   "types": {
     "chore": {
       "description": "其他类型的更改",
@@ -66,15 +77,6 @@
       "description": "添加测试或修复测试",
       "emoji": "🧪",
       "value": "test"
-    },
-    "messages": {
-      "type": "选择您要提交的更改类型:",
-      "customScope": "选择此组件影响的范围:",
-      "subject": "简短描述更改内容:\n",
-      "body": "提供更改的详细描述:\n ",
-      "breaking": "列出所有重大更改:\n",
-      "footer": "列出所有相关的问题，格式: #12, #34",
-      "confirmCommit": "此提交影响的包:\n"
     }
   }
 }
