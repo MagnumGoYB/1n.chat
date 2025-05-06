@@ -23,7 +23,7 @@ const recents = [
   { id: '12', title: 'Conversation 12' },
 ]
 
-const RecentSlice = 10
+const MAX_RECENTS_LIMIT = 10
 
 export default function Conversation() {
   const router = useRouter()
@@ -32,7 +32,7 @@ export default function Conversation() {
   const { isCollapsed, isSubPath } = useAppSidebar()
 
   const selectedId = segment === 'chat' ? params.id?.[0] : undefined
-  const slicedRecents = recents.slice(0, RecentSlice)
+  const slicedRecents = recents.slice(0, MAX_RECENTS_LIMIT)
 
   const select = (id: string) => {
     router.push(`/chat/${id}`)
@@ -65,7 +65,7 @@ export default function Conversation() {
                   />
                 ))}
               </ul>
-              {recents.length > RecentSlice && (
+              {recents.length > MAX_RECENTS_LIMIT && (
                 <div className="mb-2 px-3">
                   <Link
                     color="foreground"
