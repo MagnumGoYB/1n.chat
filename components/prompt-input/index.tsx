@@ -29,9 +29,11 @@ const getModels = (user: User | null): ModelItem[] => {
 
 const PromptInput: FC<PromptInputProps> = (props) => {
   const { className, user, textareaProps } = props
+
+  const { withLoggedIn } = useSignInDialog()
+
   const [value, setValue] = useState('')
   const [modelId, setModalId] = useState<ModelItem['id']>()
-  const { withLoggedIn } = useSignInDialog()
 
   const trimmedValue = value.trim()
 

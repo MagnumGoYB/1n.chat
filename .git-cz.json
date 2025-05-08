@@ -17,6 +17,7 @@
   "minMessageLength": 3,
   "questions": ["type", "scope", "subject", "body", "breaking", "issues"],
   "scopes": [
+    "",
     "components",
     "hooks",
     "utils",

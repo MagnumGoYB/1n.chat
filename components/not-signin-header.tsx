@@ -6,7 +6,7 @@ import Link from 'next/link'
 import { Logo } from '@/components/icons'
 import { useSignInDialog } from '@/components/signin-dialog-provider'
 
-const Header = () => {
+const NotSignInHeader = () => {
   const { open } = useSignInDialog()
 
   return (
@@ -37,4 +37,4 @@ const Header = () => {
   )
 }
 
-export default Header
+export default NotSignInHeader

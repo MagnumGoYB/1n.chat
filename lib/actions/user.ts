@@ -15,11 +15,12 @@ export async function signIn(id: string) {
   if (!user) {
     return { data: null, error: 'User not found' }
   }
+
   const cookieStore = await cookies()
   cookieStore.set(sessionKey, id, {
     httpOnly: true,
     sameSite: 'lax',
-    expires: new Date(Date.now() + 60 * 60 * 1000), // 1 hour
+    expires: new Date(Date.now() + 5 * 1000), // 1 hour
   })
 
   return { data: user, error: null }

@@ -50,7 +50,7 @@ export default function AppSidebar(props: AppSidebarProps) {
 
   return (
     <Context.Provider
-      value={{ isCollapsed, setIsCollapsed, isSubPath, parentNavName }}
+      value={{ isCollapsed, setIsCollapsed, isSubPath, parentNavName, user }}
     >
       <div className="flex h-dvh w-full">
         {!!user && (
@@ -83,7 +83,7 @@ export default function AppSidebar(props: AppSidebarProps) {
                   />
                 )}
               </div>
-              <ScrollArea>
+              <ScrollArea defaultShadowVisibility="bottom">
                 <NewChat />
                 {nav}
                 {conversation}

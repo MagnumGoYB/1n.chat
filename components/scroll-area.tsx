@@ -13,6 +13,7 @@ import { forwardRef, useCallback, useState } from 'react'
 
 export type ScrollAreaProps = {
   areaProps?: ScrollAreaRootProps
+  defaultShadowVisibility?: ScrollShadowVisibility
   orientation?: 'vertical' | 'horizontal'
   classNames?: {
     root?: string
@@ -25,9 +26,15 @@ const ScrollArea = forwardRef<
   ElementRef<typeof ScrollAreaRoot>,
   PropsWithChildren<ScrollAreaProps>
 >((props, ref) => {
-  const { areaProps, orientation = 'vertical', children, classNames } = props
+  const {
+    areaProps,
+    defaultShadowVisibility = 'auto',
+    orientation = 'vertical',
+    children,
+    classNames,
+  } = props
   const [scrollShadowVisibility, setScrollShadowVisibility] =
-    useState<ScrollShadowVisibility>()
+    useState<ScrollShadowVisibility>(defaultShadowVisibility)
 
   const onScroll: UIEventHandler<HTMLDivElement> = useCallback((e) => {
     const isAtTop = e.currentTarget.scrollTop === 0

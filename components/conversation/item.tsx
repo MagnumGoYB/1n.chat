@@ -40,7 +40,7 @@ export default function ConversationItem({
           isSelected && 'bg-default/40',
         )}
         onMouseEnter={() => {
-          router.prefetch(`/chat/${id}`)
+          router.prefetch(`/app/chat/${id}`)
         }}
         onPress={onSelect}
       >

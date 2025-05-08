@@ -3,12 +3,8 @@ import type { ReactNode } from 'react'
 
 import { cn } from '@heroui/react'
 
-import AppSidebar from '@/components/app-sidebar'
-import Conversation from '@/components/conversation'
-import SidebarNav from '@/components/sidebar-nav'
 import { inter, roboto_mono } from '@/config/fonts'
 import { siteConfig } from '@/config/site'
-import { getCachedUser } from '@/lib/queries/user'
 
 import { Providers } from './providers'
 
@@ -43,18 +39,16 @@ export default async function RootLayout({
 }: {
   children: ReactNode
 }) {
-  const rootClass = cn(
-    'min-h-screen bg-background font-sans antialiased',
-    inter.variable,
-    roboto_mono.variable,
-  )
-
-  const user = await getCachedUser()
-
   return (
     <html suppressHydrationWarning lang="en" translate="no">
       <head />
-      <body className={rootClass}>
+      <body
+        className={cn(
+          'min-h-screen bg-background font-sans antialiased',
+          inter.variable,
+          roboto_mono.variable,
+        )}
+      >
         <Providers
           themeProps={{
             attribute: 'class',
@@ -62,13 +56,7 @@ export default async function RootLayout({
             enableSystem: true,
           }}
         >
-          <AppSidebar
-            nav={<SidebarNav />}
-            conversation={<Conversation />}
-            user={user}
-          >
-            {children}
-          </AppSidebar>
+          {children}
         </Providers>
       </body>
     </html>
