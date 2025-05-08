@@ -6,6 +6,7 @@ import { authConfig } from '@/config/auth'
 import { Users } from '@/lib/mock/user'
 
 const sessionKey = authConfig.sessionKey
+const sessionDuration = authConfig.sessionDuration
 
 export async function signIn(id: string) {
   if (!id) {
@@ -20,7 +21,7 @@ export async function signIn(id: string) {
   cookieStore.set(sessionKey, id, {
     httpOnly: true,
     sameSite: 'lax',
-    expires: new Date(Date.now() + 5 * 1000), // 1 hour
+    expires: new Date(Date.now() + sessionDuration),
   })
 
   return { data: user, error: null }
