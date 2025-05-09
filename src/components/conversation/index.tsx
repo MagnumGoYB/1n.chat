@@ -54,7 +54,7 @@ export default function Conversation() {
               <span className="px-3 font-medium text-default-400 text-tiny">
                 Recents
               </span>
-              <ul className="flex flex-col">
+              <ul className="flex flex-col space-y-px">
                 {slicedRecents.map((recent) => (
                   <ConversationItem
                     key={recent.id}

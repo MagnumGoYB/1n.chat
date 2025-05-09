@@ -28,6 +28,7 @@ type WithCheckLoggedIn = <T extends (...args: any[]) => any>(
 type Context = {
   user: User | null
   isLoading: boolean
+  isFetching: boolean
   isError: boolean
   withCheckLoggedIn: WithCheckLoggedIn
 }
@@ -45,6 +46,7 @@ export const UserGuardProvider = ({ children }: PropsWithChildren) => {
   const {
     data: user,
     isLoading,
+    isFetching,
     isError,
   } = useQuery({
     queryKey: ['me', isUnauthorized],
@@ -75,7 +77,9 @@ export const UserGuardProvider = ({ children }: PropsWithChildren) => {
   }
 
   return (
-    <Context.Provider value={{ withCheckLoggedIn, user, isLoading, isError }}>
+    <Context.Provider
+      value={{ withCheckLoggedIn, user, isLoading, isFetching, isError }}
+    >
       {children}
       <Modal
         hideCloseButton
