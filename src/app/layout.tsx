@@ -3,6 +3,9 @@ import type { ReactNode } from 'react'
 
 import { cn } from '@heroui/react'
 
+import AppSidebar from '@/components/app-sidebar'
+import Conversation from '@/components/conversation'
+import SidebarNav from '@/components/sidebar-nav'
 import { inter, roboto_mono } from '@/config/fonts'
 import { siteConfig } from '@/config/site'
 
@@ -56,7 +59,9 @@ export default async function RootLayout({
             enableSystem: true,
           }}
         >
-          {children}
+          <AppSidebar nav={<SidebarNav />} conversation={<Conversation />}>
+            {children}
+          </AppSidebar>
         </Providers>
       </body>
     </html>

@@ -9,12 +9,11 @@ import type { ModelItem } from '@/components/model-switcher/types'
 import type { User } from '@/lib/types/user'
 
 import ModelSwitcher from '@/components/model-switcher'
-import { useSignInDialog } from '@/components/signin-dialog-provider'
+import { useUserGuard } from '@/components/user-guard-provider'
 import { modelsConfig } from '@/config/models'
 
 type PromptInputProps = {
   className?: string
-  user: User | null
   textareaProps?: Omit<TextAreaProps, 'onValueChange' | 'value'>
 }
 
@@ -28,9 +27,9 @@ const getModels = (user: User | null): ModelItem[] => {
 }
 
 const PromptInput: FC<PromptInputProps> = (props) => {
-  const { className, user, textareaProps } = props
+  const { className, textareaProps } = props
 
-  const { withLoggedIn } = useSignInDialog()
+  const { withCheckLoggedIn, user } = useUserGuard()
 
   const [value, setValue] = useState('')
   const [modelId, setModalId] = useState<ModelItem['id']>()
@@ -85,7 +84,7 @@ const PromptInput: FC<PromptInputProps> = (props) => {
           <ModelSwitcher
             modelId={modelId}
             models={getModels(user)}
-            onSelectModel={withLoggedIn(handleSelectModel)(user)}
+            onSelectModel={withCheckLoggedIn(handleSelectModel)}
           />
         </div>
         <div className="flex items-center gap-3">
@@ -96,7 +95,7 @@ const PromptInput: FC<PromptInputProps> = (props) => {
             className="pointer-events-auto"
             variant="light"
             size="sm"
-            onPress={withLoggedIn(handleAttachFile)(user)}
+            onPress={withCheckLoggedIn(handleAttachFile)}
           >
             <span className="iconify tabler--paperclip size-[18px] text-default-600" />
           </Button>
@@ -108,7 +107,7 @@ const PromptInput: FC<PromptInputProps> = (props) => {
             variant="solid"
             className="pointer-events-auto bg-foreground text-background disabled:cursor-default disabled:bg-default-300 disabled:text-default-foreground/80 disabled:opacity-disabled"
             isDisabled={!trimmedValue}
-            onPress={withLoggedIn(handleSend)(user)}
+            onPress={withCheckLoggedIn(handleSend)}
           >
             <span className="iconify tabler--arrow-big-up size-[18px]" />
           </Button>

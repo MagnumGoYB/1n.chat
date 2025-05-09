@@ -7,10 +7,10 @@ import { useDisclosure } from '@heroui/use-disclosure'
 import { useIsMobile } from '@heroui/use-is-mobile'
 import { useCallback, useLayoutEffect, useState } from 'react'
 
-import type { User } from '@/lib/types/user'
-
 import CurrentUser from '@/components/current-user'
 import ScrollArea from '@/components/scroll-area'
+
+import { useUserGuard } from '../user-guard-provider'
 import CollapseButton from './collapse-button'
 import { Context } from './context'
 import NewChat from './new-chat'
@@ -20,17 +20,17 @@ import useIsSubPath from './use-is-sub-path'
 import Wrapper from './wrapper'
 
 type AppSidebarProps = PropsWithChildren<{
-  user: User | null
   nav: ReactNode
   conversation?: ReactNode
   enableCollapse?: boolean
 }>
 
 export default function AppSidebar(props: AppSidebarProps) {
-  const { nav, conversation, user, enableCollapse = true, children } = props
+  const { nav, conversation, enableCollapse = true, children } = props
 
   const [isCollapsed, setIsCollapsed] = useState(false)
 
+  const { user } = useUserGuard()
   const isMobile = useIsMobile()
   const { isOpen, onOpenChange } = useDisclosure()
   const [isSubPath, parentNavName] = useIsSubPath()
@@ -50,13 +50,13 @@ export default function AppSidebar(props: AppSidebarProps) {
 
   return (
     <Context.Provider
-      value={{ isCollapsed, setIsCollapsed, isSubPath, parentNavName, user }}
+      value={{ isCollapsed, setIsCollapsed, isSubPath, parentNavName }}
     >
       <div className="flex h-dvh w-full">
-        {!!user && (
+        {user && (
           <Wrapper
             className={cn(
-              'flex-col overflow-hidden border-r bg-default-100 py-4 transition-[width] duration-200 ease-sidebar-collapse will-change-transform dark:border-default-100 dark:bg-background',
+              'hidden flex-col overflow-hidden border-r bg-default-100 py-4 transition-[width] duration-200 ease-sidebar-collapse will-change-transform dark:border-default-100 dark:bg-background',
               { 'w-[200px]': !isCollapsed },
               { 'w-16': isCollapsed },
             )}
@@ -107,7 +107,7 @@ export default function AppSidebar(props: AppSidebarProps) {
             </div>
           </Wrapper>
         )}
-        <div className="flex h-dvh w-full flex-1 flex-col overflow-auto">
+        <div className="relative flex h-dvh w-full flex-1 flex-col overflow-auto">
           {children}
         </div>
       </div>

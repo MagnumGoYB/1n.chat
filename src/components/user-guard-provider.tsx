@@ -10,43 +10,64 @@ import {
   ModalHeader,
   useDisclosure,
 } from '@heroui/react'
+import { useQuery, useQueryClient } from '@tanstack/react-query'
+import { useSearchParams } from 'next/navigation'
 
 import type { User } from '@/lib/types/user'
 
 import { Logo } from '@/components/icons'
 import { siteConfig } from '@/config/site'
 import { signIn } from '@/lib/actions/user'
+import { getCachedUser } from '@/lib/queries/user'
 
 // biome-ignore lint/suspicious/noExplicitAny: <explanation>
-type WithLoggedIn = <T extends (...args: any[]) => any>(
-  next: T,
-) => (user: User | null) => (...args: Parameters<T>) => ReturnType<T>
+type WithCheckLoggedIn = <T extends (...args: any[]) => any>(
+  next?: T,
+) => (...args: Parameters<T>) => ReturnType<T>
 
 type Context = {
-  withLoggedIn: WithLoggedIn
-  close: () => void
-  open: () => void
+  user: User | null
+  isLoading: boolean
+  isError: boolean
+  withCheckLoggedIn: WithCheckLoggedIn
 }
 
 const Context = createContext<Context | null>(null)
 
-export const SignInDialogProvider = ({ children }: PropsWithChildren) => {
+export const UserGuardProvider = ({ children }: PropsWithChildren) => {
+  const searchParams = useSearchParams()
+  const queryClient = useQueryClient()
+
   const { isOpen, onOpenChange, onOpen: open, onClose: close } = useDisclosure()
 
-  const withLoggedIn: WithLoggedIn = (next) => {
-    return (user) =>
-      (...args) => {
-        if (!user) {
-          open()
-          return
-        }
-        return next(...args)
+  const isUnauthorized = !!searchParams.get('unauthorized')
+
+  const {
+    data: user,
+    isLoading,
+    isError,
+  } = useQuery({
+    queryKey: ['me', isUnauthorized],
+    queryFn: getCachedUser,
+    initialData: null,
+  })
+
+  const withCheckLoggedIn: WithCheckLoggedIn = (next) => {
+    return (...args) => {
+      if (!user) {
+        open()
+        return
       }
+      return next?.(...args)
+    }
   }
 
   const handleSignIn = (_: string) => async () => {
     try {
       await signIn('cuid:clj1v0x2g0000qz6v4f8k3h5d')
+      await queryClient.invalidateQueries({
+        predicate: ({ queryKey }) => queryKey[0] === 'me',
+      })
       close()
     } catch (error) {
       console.error('Sign in error:', error)
@@ -54,7 +75,7 @@ export const SignInDialogProvider = ({ children }: PropsWithChildren) => {
   }
 
   return (
-    <Context.Provider value={{ withLoggedIn, open, close }}>
+    <Context.Provider value={{ withCheckLoggedIn, user, isLoading, isError }}>
       {children}
       <Modal
         hideCloseButton
@@ -106,13 +127,11 @@ export const SignInDialogProvider = ({ children }: PropsWithChildren) => {
   )
 }
 
-export const useSignInDialog = () => {
+export const useUserGuard = () => {
   const context = useContext(Context)
 
   if (!context) {
-    throw new Error(
-      'useSignInDialog must be used within a SignInDialogProvider',
-    )
+    throw new Error('useUserGuard must be used within a UserGuardProvider')
   }
 
   return context

@@ -12,6 +12,7 @@ export async function signIn(id: string) {
   if (!id) {
     return { data: null, error: 'User ID is required' }
   }
+
   const user = Users.find((user) => user.id === id)
   if (!user) {
     return { data: null, error: 'User not found' }

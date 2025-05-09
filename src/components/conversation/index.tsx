@@ -35,7 +35,7 @@ export default function Conversation() {
   const slicedRecents = recents.slice(0, MAX_RECENTS_LIMIT)
 
   const select = (id: string) => {
-    router.push(`/app/chat/${id}`)
+    router.push(`/chat/${id}`)
   }
 
   return (
