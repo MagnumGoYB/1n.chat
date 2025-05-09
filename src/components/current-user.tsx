@@ -13,9 +13,9 @@ import {
 import type { Key } from 'react'
 
 import ThemeSwitcher from '@/components/theme-switcher'
-import { signOut } from '@/lib/actions/user'
 import { useRouter } from 'next/navigation'
 import { useAppSidebar } from './app-sidebar'
+import { useUserGuard } from './user-guard-provider'
 
 type CurrentUserProps = {
   avatar?: string
@@ -32,15 +32,7 @@ export default function CurrentUser({
 }: CurrentUserProps) {
   const router = useRouter()
   const { isCollapsed } = useAppSidebar()
-
-  const logout = async () => {
-    try {
-      await signOut()
-      router.push('/')
-    } catch (error) {
-      console.error('Logout error:', error)
-    }
-  }
+  const { logout } = useUserGuard()
 
   const handleAction = async (key: Key) => {
     onAction?.(key)

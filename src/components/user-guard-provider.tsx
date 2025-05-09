@@ -11,14 +11,14 @@ import {
   useDisclosure,
 } from '@heroui/react'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
-import { useSearchParams } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 
 import type { User } from '@/lib/types/user'
 
 import { Logo } from '@/components/icons'
 import { siteConfig } from '@/config/site'
-import { signIn } from '@/lib/actions/user'
-import { getCachedUser } from '@/lib/queries/user'
+import { signIn, signOut } from '@/lib/actions/user'
+import { getCurrentUser } from '@/lib/queries/user'
 
 // biome-ignore lint/suspicious/noExplicitAny: <explanation>
 type WithCheckLoggedIn = <T extends (...args: any[]) => any>(
@@ -31,17 +31,22 @@ type Context = {
   isFetching: boolean
   isError: boolean
   withCheckLoggedIn: WithCheckLoggedIn
+  logout: () => void
 }
 
 const Context = createContext<Context | null>(null)
 
-export const UserGuardProvider = ({ children }: PropsWithChildren) => {
+export const UserGuardProvider = ({
+  children,
+  initialUser,
+}: PropsWithChildren<{ initialUser: User | null }>) => {
+  const router = useRouter()
   const searchParams = useSearchParams()
   const queryClient = useQueryClient()
 
   const { isOpen, onOpenChange, onOpen: open, onClose: close } = useDisclosure()
 
-  const isUnauthorized = !!searchParams.get('unauthorized')
+  const redirect = searchParams.get('redirect')
 
   const {
     data: user,
@@ -49,9 +54,9 @@ export const UserGuardProvider = ({ children }: PropsWithChildren) => {
     isFetching,
     isError,
   } = useQuery({
-    queryKey: ['me', isUnauthorized],
-    queryFn: getCachedUser,
-    initialData: null,
+    initialData: initialUser,
+    queryKey: ['me', !!searchParams.get('unauthorized')],
+    queryFn: getCurrentUser,
   })
 
   const withCheckLoggedIn: WithCheckLoggedIn = (next) => {
@@ -70,15 +75,35 @@ export const UserGuardProvider = ({ children }: PropsWithChildren) => {
       await queryClient.invalidateQueries({
         predicate: ({ queryKey }) => queryKey[0] === 'me',
       })
+      router.replace(redirect ?? '/')
       close()
     } catch (error) {
       console.error('Sign in error:', error)
     }
   }
 
+  const logout = async () => {
+    try {
+      await signOut()
+      queryClient.invalidateQueries({
+        predicate: ({ queryKey }) => queryKey[0] === 'me',
+      })
+      router.replace('/')
+    } catch (error) {
+      console.error('Logout error:', error)
+    }
+  }
+
   return (
     <Context.Provider
-      value={{ withCheckLoggedIn, user, isLoading, isFetching, isError }}
+      value={{
+        user,
+        isLoading,
+        isFetching,
+        isError,
+        withCheckLoggedIn,
+        logout,
+      }}
     >
       {children}
       <Modal
