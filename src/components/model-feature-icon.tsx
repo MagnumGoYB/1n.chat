@@ -1,6 +1,6 @@
 import { Tooltip, cn } from '@heroui/react'
 
-import type { ModelFeature } from '@/lib/types/model'
+import type { ModelFeature } from '@/types/model'
 
 import { modelFeatureIcons } from '@/config/models'
 

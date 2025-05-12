@@ -4,7 +4,7 @@ import { unstable_noStore as noStore } from 'next/cache'
 import { cookies } from 'next/headers'
 import { cache } from 'react'
 
-import type { User } from '@/lib/types/user'
+import type { User } from '@/types/user'
 
 import { authConfig } from '@/config/auth'
 import { Users } from '@/lib/mock/user'

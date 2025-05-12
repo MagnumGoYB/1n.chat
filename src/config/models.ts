@@ -1,4 +1,4 @@
-import type { Model, ModelFeature } from '@/lib/types/model'
+import type { Model, ModelFeature } from '@/types/model'
 
 export type ModelsConfig = typeof modelsConfig
 

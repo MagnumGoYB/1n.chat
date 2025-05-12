@@ -1,9 +1,9 @@
-import type { ModelFeature } from '@/lib/types/model'
+import type { ModelFeature, ModelIconKey } from '@/types/model'
 import type { OverlayPlacement } from '@heroui/aria-utils'
 
 export interface ModelItem {
   id: string
-  icon: string
+  icon: ModelIconKey
   name: string
   tip: string
   description?: string

@@ -1,6 +1,6 @@
 import { cache } from 'react'
 
-import type { User } from '@/lib/types/user'
+import type { User } from '@/types/user'
 
 import { modelsConfig } from '@/config/models'
 

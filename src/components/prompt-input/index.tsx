@@ -6,7 +6,7 @@ import { Button, type TextAreaProps, Textarea, cn } from '@heroui/react'
 import { useState } from 'react'
 
 import type { ModelItem } from '@/components/model-switcher/types'
-import type { User } from '@/lib/types/user'
+import type { User } from '@/types/user'
 
 import ModelSwitcher from '@/components/model-switcher'
 import { useUserGuard } from '@/components/user-guard-provider'

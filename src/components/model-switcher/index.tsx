@@ -1,6 +1,6 @@
 'use client'
 
-import type { ElementRef, Key, ReactNode } from 'react'
+import type { ElementRef, Key } from 'react'
 
 import {
   Button,
@@ -18,17 +18,9 @@ import { useIntersectionObserver } from 'usehooks-ts'
 
 import type { ModelSwitcherProps } from './types'
 
-import * as ModelsIcon from '@/components/icons/model-icons'
 import ModelFeatureIcon from '@/components/model-feature-icon'
 import ScrollArea from '@/components/scroll-area'
-
-const renderModelIcon = (key: string): ReactNode => {
-  if (key in ModelsIcon) {
-    const Icon = ModelsIcon[key as keyof typeof ModelsIcon]
-    return <Icon className="size-4" />
-  }
-  return null
-}
+import ModelIcon from '../model-icon'
 
 export default function ModelSwitcher(props: ModelSwitcherProps) {
   const {
@@ -102,7 +94,7 @@ export default function ModelSwitcher(props: ModelSwitcherProps) {
             isOpen && 'bg-default/40',
           )}
           size="sm"
-          startContent={renderModelIcon(currentModel.icon)}
+          startContent={<ModelIcon modelKey={currentModel.icon} />}
           endContent={
             <span
               className={cn(
@@ -140,7 +132,7 @@ export default function ModelSwitcher(props: ModelSwitcherProps) {
                   title:
                     'flex flex-nowrap items-center gap-2 font-medium text-sm',
                 }}
-                startContent={renderModelIcon(m.icon)}
+                startContent={<ModelIcon modelKey={m.icon} />}
                 endContent={
                   m.features &&
                   m.features.length > 0 && (

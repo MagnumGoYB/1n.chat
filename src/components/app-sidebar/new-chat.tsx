@@ -1,10 +1,12 @@
 import { Button, Tooltip } from '@heroui/react'
 import { AnimatePresence, motion } from 'motion/react'
+import { useRouter } from 'next/navigation'
 
 import { SideBarMotionVariants } from '@/lib/motion-variants'
 import useAppSidebar from './use-app-sidebar'
 
 export default function NewChat() {
+  const router = useRouter()
   const { isCollapsed, isSubPath } = useAppSidebar()
 
   return (
@@ -43,6 +45,9 @@ export default function NewChat() {
               variant="shadow"
               className="w-full min-w-0 border bg-white font-medium dark:border-default-200 dark:bg-default-100"
               radius="full"
+              onPress={() => {
+                router.push('/')
+              }}
             >
               Start new chat
             </Button>

@@ -13,7 +13,7 @@ import {
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { useRouter, useSearchParams } from 'next/navigation'
 
-import type { User } from '@/lib/types/user'
+import type { User } from '@/types/user'
 
 import { Logo } from '@/components/icons'
 import { siteConfig } from '@/config/site'
