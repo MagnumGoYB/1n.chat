@@ -71,7 +71,7 @@ export const UserGuardProvider = ({
 
   const handleSignIn = (_: string) => async () => {
     try {
-      await signIn('cuid:clj1v0x2g0000qz6v4f8k3h5d')
+      await signIn('clj1v0x2g0000qz6v4f8k3h5d')
       await queryClient.invalidateQueries({
         predicate: ({ queryKey }) => queryKey[0] === 'me',
       })

@@ -3,7 +3,7 @@
 import { Avatar, cn } from '@heroui/react'
 import { upperFirst } from 'es-toolkit/string'
 
-import type { Message as MessageType } from '@/types/message'
+import type { Message as MessageType } from '@/types/conversation'
 
 import ModelIcon from './model-icon'
 

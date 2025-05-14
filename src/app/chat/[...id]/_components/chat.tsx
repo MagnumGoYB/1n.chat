@@ -1,15 +1,15 @@
 'use client'
 
-import type { Message as MessageType } from '@/types/message'
+import type { Message as MessageType } from '@/types/conversation'
 
 import Message from '@/components/message'
 import ScrollArea from '@/components/scroll-area'
 
-interface ConversationProps {
+interface ChatProps {
   messages: MessageType[]
 }
 
-export default function Conversation(props: ConversationProps) {
+export default function Chat(props: ChatProps) {
   const { messages = [] } = props
 
   return (

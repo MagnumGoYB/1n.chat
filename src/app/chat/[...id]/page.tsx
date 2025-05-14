@@ -1,8 +1,8 @@
 import PromptInput from '@/components/prompt-input'
 
-import type { Message as MessageType } from '@/types/message'
+import type { Message as MessageType } from '@/types/conversation'
 
-import Conversation from './_components/conversation'
+import Chat from './_components/chat'
 
 const messages = [
   {
@@ -63,7 +63,7 @@ const messages = [
   },
 ] satisfies MessageType[]
 
-export default async function Chat({
+export default async function ChatPage({
   params,
 }: {
   params: Promise<{ id: string }>
@@ -74,7 +74,7 @@ export default async function Chat({
   return (
     <main className="flex w-full flex-1 flex-col">
       <section className="flex max-h-[calc(100dvh-120px)] w-full flex-1 overflow-hidden">
-        <Conversation messages={messages} />
+        <Chat messages={messages} />
       </section>
       <section className="absolute bottom-0 flex w-full items-center justify-center px-2">
         <div className="w-full max-w-3xl">

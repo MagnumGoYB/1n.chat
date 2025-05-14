@@ -13,7 +13,7 @@ import { Providers } from './providers'
 
 import '@/styles/globals.css'
 import { UserGuardProvider } from '@/components/user-guard-provider'
-import { getCachedUser } from '@/lib/queries/user'
+import { getCachedUser, getConversations } from '@/lib/queries/user'
 
 export const metadata: Metadata = {
   title: {
@@ -45,6 +45,14 @@ export default async function RootLayout({
   children: ReactNode
 }) {
   const initialUser = await getCachedUser()
+  const initialConversations = await getConversations()
+
+  const initialRecents = initialConversations.filter(
+    (conversation) => !conversation.isFavorite,
+  )
+  const initialFavorites = initialConversations.filter(
+    (conversation) => conversation.isFavorite,
+  )
 
   return (
     <html suppressHydrationWarning lang="en" translate="no">
@@ -64,7 +72,15 @@ export default async function RootLayout({
           }}
         >
           <UserGuardProvider initialUser={initialUser}>
-            <AppSidebar nav={<SidebarNav />} conversation={<Conversation />}>
+            <AppSidebar
+              nav={<SidebarNav />}
+              conversation={
+                <Conversation
+                  recents={initialRecents}
+                  favorites={initialFavorites}
+                />
+              }
+            >
               {children}
             </AppSidebar>
           </UserGuardProvider>

@@ -2,7 +2,7 @@ import type { User } from '@/types/user'
 
 export const Users: User[] = [
   {
-    id: 'cuid:clj1v0x2g0000qz6v4f8k3h5d',
+    id: 'clj1v0x2g0000qz6v4f8k3h5d',
     name: 'Admin',
     email: 'admin@example.com',
     avatar: 'https://avatars.githubusercontent.com/u/22886057?v=4',
