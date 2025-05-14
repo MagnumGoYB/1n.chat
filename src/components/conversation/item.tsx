@@ -1,19 +1,14 @@
 import type { Key } from 'react'
 
-import {
-  Button,
-  Dropdown,
-  DropdownItem,
-  DropdownMenu,
-  DropdownTrigger,
-  cn,
-} from '@heroui/react'
+import { Button, cn } from '@heroui/react'
 import { useRouter } from 'next/navigation'
+import Actions from './actions'
 
 interface ConversationItemProps {
   id: string
   title: string
   isSelected?: boolean
+  isFavorite?: boolean
   onSelect?: () => void
 }
 
@@ -22,6 +17,7 @@ export default function ConversationItem({
   title,
   onSelect,
   isSelected,
+  isFavorite,
 }: ConversationItemProps) {
   const router = useRouter()
 
@@ -46,50 +42,22 @@ export default function ConversationItem({
       >
         <span className="max-w-[calc(100%-24px)] truncate">{title}</span>
       </Button>
-      <Dropdown placement="right-start">
-        <DropdownTrigger>
-          <Button
-            isIconOnly
-            disableRipple
-            variant="light"
-            radius="full"
-            size="sm"
-            className="-translate-y-1/2 absolute top-1/2 right-0 text-default-500 opacity-0 hover:opacity-100 peer-hover:opacity-100 data-[hover=true]:bg-transparent data-[hover=true]:text-default-700"
-          >
-            <span className="iconify lucide--more-horizontal size-4" />
-          </Button>
-        </DropdownTrigger>
-        <DropdownMenu
-          aria-label="Conversation Actions"
-          variant="flat"
-          selectionMode="none"
-          onAction={handleActions}
+      <Actions
+        placement="right-start"
+        isFavorite={isFavorite}
+        onAction={handleActions}
+      >
+        <Button
+          isIconOnly
+          disableRipple
+          variant="light"
+          radius="full"
+          size="sm"
+          className="-translate-y-1/2 absolute top-1/2 right-0 text-default-500 opacity-0 hover:opacity-100 peer-hover:opacity-100 data-[hover=true]:bg-transparent data-[hover=true]:text-default-700"
         >
-          <DropdownItem
-            key="rename"
-            textValue="Rename"
-            startContent={<span className="iconify tabler--pencil size-4" />}
-          >
-            Rename
-          </DropdownItem>
-          <DropdownItem
-            key="favorite"
-            textValue="Favorite"
-            startContent={<span className="iconify tabler--star size-4" />}
-          >
-            Favorite
-          </DropdownItem>
-          <DropdownItem
-            key="delete"
-            textValue="Delete"
-            className="text-danger"
-            color="danger"
-            startContent={<span className="iconify tabler--trash size-4" />}
-          >
-            Delete
-          </DropdownItem>
-        </DropdownMenu>
-      </Dropdown>
+          <span className="iconify lucide--more-horizontal size-4" />
+        </Button>
+      </Actions>
     </li>
   )
 }

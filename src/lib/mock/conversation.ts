@@ -31,33 +31,41 @@ export const Conversations: Conversation[] = [
 export const Messages: Message[] = [
   {
     id: 'cmaknkcsp000308ih6jr6957w',
+    conversationId: 'cmakniqka000008ih8j82f6v6',
     role: 'user',
     content: 'Hello, how are you?',
   },
   {
     id: 'cmaknkjy6000408ihhhp0d6fp',
+    conversationId: 'cmakniqka000008ih8j82f6v6',
     role: 'assistant',
     content: "I'm fine, thank you!",
     model: { id: 'gemini-2.5-flash', icon: 'Gemini', name: 'Gemini 2.5 Flash' },
   },
   {
     id: 'cmaknkqxd000508ihdbaz03zt',
+    conversationId: 'cmakniqka000008ih8j82f6v6',
+
     role: 'user',
     content: 'What can you do?',
   },
   {
     id: 'cmaknkvt4000608ihft30cj97',
+    conversationId: 'cmakniqka000008ih8j82f6v6',
     role: 'assistant',
     content: 'I can do many things!',
     model: { id: 'gpt-4o', icon: 'GPT', name: 'GPT-4o' },
   },
   {
     id: 'cmaknl1je000708ihfqv683ks',
+    conversationId: 'cmakniqka000008ih8j82f6v6',
     role: 'user',
     content: 'Can you tell me a joke?',
   },
   {
     id: 'cmaknl624000808ih66yvfu98',
+    conversationId: 'cmakniqka000008ih8j82f6v6',
+
     role: 'assistant',
     content:
       'Sure! Why did the chicken cross the road? To get to the other side!',
@@ -65,22 +73,26 @@ export const Messages: Message[] = [
   },
   {
     id: 'cmaknlakz000908ihfn6lex0j',
+    conversationId: 'cmakniqka000008ih8j82f6v6',
     role: 'user',
     content: 'That was funny!',
   },
   {
     id: 'cmaknlfxe000a08ihgm6of5ss',
+    conversationId: 'cmakniqka000008ih8j82f6v6',
     role: 'assistant',
     content: 'I am glad you liked it!',
     model: { id: 'gemini-2.5-flash', icon: 'Gemini', name: 'Gemini 2.5 Flash' },
   },
   {
     id: 'cmaknlkw5000b08ihdvdg8r9w',
+    conversationId: 'cmakniqka000008ih8j82f6v6',
     role: 'user',
     content: 'What is the weather like today?',
   },
   {
     id: 'cmaknlond000c08ihaz3s6lq3',
+    conversationId: 'cmakniqka000008ih8j82f6v6',
     role: 'assistant',
     content: 'The weather is sunny with a chance of rain later.',
     model: { id: 'gpt-4o', icon: 'GPT', name: 'GPT-4o' },

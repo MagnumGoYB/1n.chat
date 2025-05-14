@@ -6,14 +6,15 @@ import { cn } from '@heroui/react'
 import AppSidebar from '@/components/app-sidebar'
 import Conversation from '@/components/conversation'
 import SidebarNav from '@/components/sidebar-nav'
+import { UserGuardProvider } from '@/components/user-guard-provider'
 import { inter, roboto_mono } from '@/config/fonts'
 import { siteConfig } from '@/config/site'
+import { getConversations } from '@/lib/queries/conversation'
+import { getCachedUser } from '@/lib/queries/user'
 
 import { Providers } from './providers'
 
 import '@/styles/globals.css'
-import { UserGuardProvider } from '@/components/user-guard-provider'
-import { getCachedUser, getConversations } from '@/lib/queries/user'
 
 export const metadata: Metadata = {
   title: {

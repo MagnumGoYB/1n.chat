@@ -9,7 +9,12 @@ export type Conversation = {
 
 export type Message = {
   id: string
+  conversationId: string
   role: 'user' | 'assistant'
   content: string
   model?: Pick<Model, 'id' | 'name' | 'icon'>
+}
+
+export type ConversationWithMessages = Conversation & {
+  messages: Message[]
 }

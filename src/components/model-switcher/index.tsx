@@ -16,11 +16,11 @@ import {
 import { useRef } from 'react'
 import { useIntersectionObserver } from 'usehooks-ts'
 
-import type { ModelSwitcherProps } from './types'
-
 import ModelFeatureIcon from '@/components/model-feature-icon'
+import ModelIcon from '@/components/model-icon'
 import ScrollArea from '@/components/scroll-area'
-import ModelIcon from '../model-icon'
+
+import type { ModelSwitcherProps } from './types'
 
 export default function ModelSwitcher(props: ModelSwitcherProps) {
   const {

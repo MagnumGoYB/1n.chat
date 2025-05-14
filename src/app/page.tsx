@@ -5,7 +5,9 @@ export default async function RootPage() {
   return (
     <>
       <NotSignInHeader />
-      <Welcome />
+      <main className="flex w-full flex-1 items-center justify-center">
+        <Welcome />
+      </main>
     </>
   )
 }

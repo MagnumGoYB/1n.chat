@@ -4,14 +4,20 @@ import { Avatar, cn } from '@heroui/react'
 import { upperFirst } from 'es-toolkit/string'
 
 import type { Message as MessageType } from '@/types/conversation'
+import type { Model } from '@/types/model'
 
 import ModelIcon from './model-icon'
 
-interface AssistantMessageProps extends Omit<MessageType, 'role'> {
+interface MessageBaseProps {
+  id: MessageType['id']
+  content: MessageType['content']
+  model?: Pick<Model, 'id' | 'name' | 'icon'>
+}
+interface AssistantMessageProps extends MessageBaseProps {
   role: 'assistant'
 }
 
-interface UserMessageProps extends Omit<MessageType, 'role' | 'model'> {
+interface UserMessageProps extends MessageBaseProps {
   role: 'user'
 }
 

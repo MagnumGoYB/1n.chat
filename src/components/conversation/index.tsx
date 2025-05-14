@@ -23,11 +23,11 @@ export default function Conversation({
   favorites = [],
 }: ConversationProps) {
   const router = useRouter()
-  const params = useParams()
+  const params = useParams<{ id: string }>()
   const segment = useSelectedLayoutSegment()
   const { isCollapsed, isSubPath } = useAppSidebar()
 
-  const selectedId = segment === 'chat' ? params.id?.[0] : undefined
+  const selectedId = segment === 'chat' ? params.id : undefined
   const slicedRecents = recents.slice(0, MAX_LIMIT)
 
   const select = (id: string) => {
@@ -57,6 +57,7 @@ export default function Conversation({
                     key={`favorite-${item.id}`}
                     id={item.id}
                     title={item.title}
+                    isFavorite={item.isFavorite}
                     isSelected={item.id === selectedId}
                     onSelect={() => select(item.id)}
                   />
@@ -75,6 +76,7 @@ export default function Conversation({
                     key={`recent-${recent.id}`}
                     id={recent.id}
                     title={recent.title}
+                    isFavorite={recent.isFavorite}
                     isSelected={recent.id === selectedId}
                     onSelect={() => select(recent.id)}
                   />
