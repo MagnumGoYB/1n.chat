@@ -83,7 +83,10 @@ export default function AppSidebar(props: AppSidebarProps) {
                   />
                 )}
               </div>
-              <ScrollArea defaultShadowVisibility="bottom">
+              <ScrollArea
+                defaultShadowVisibility="bottom"
+                classNames={{ root: cn(isCollapsed && 'pr-1.5') }}
+              >
                 <NewChat />
                 {nav}
                 {conversation}
