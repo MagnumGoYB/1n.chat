@@ -1,4 +1,4 @@
-import type { Key } from 'react'
+import { type Key, useState } from 'react'
 
 import { Button, cn } from '@heroui/react'
 import { useRouter } from 'next/navigation'
@@ -21,18 +21,20 @@ export default function ConversationItem({
 }: ConversationItemProps) {
   const router = useRouter()
 
+  const [open, setOpen] = useState(false)
+
   const handleActions = (key: Key) => {
     console.log(`Actions clicked: ${key} on conversation ${id}`)
   }
 
   return (
-    <li className="relative w-full">
+    <li className="group relative w-full">
       <Button
         disableRipple
         variant="light"
         radius="sm"
         className={cn(
-          'peer flex h-9 w-full min-w-0 justify-start gap-2.5 rounded-small px-3 text-default-500 text-small',
+          'flex h-9 w-full min-w-0 justify-start gap-2.5 rounded-small px-3 text-default-500 text-small',
           isSelected && 'bg-default/40',
         )}
         onMouseEnter={() => {
@@ -40,12 +42,21 @@ export default function ConversationItem({
         }}
         onPress={onSelect}
       >
-        <span className="max-w-[calc(100%-24px)] truncate">{title}</span>
+        <span
+          className={cn(
+            'truncate group-hover:max-w-[calc(100%-24px)]',
+            open && 'max-w-[calc(100%-24px)]',
+          )}
+        >
+          {title}
+        </span>
       </Button>
       <Actions
         placement="right-start"
         isFavorite={isFavorite}
         onAction={handleActions}
+        onOpenChange={setOpen}
+        isOpen={open}
       >
         <Button
           isIconOnly
@@ -53,7 +64,10 @@ export default function ConversationItem({
           variant="light"
           radius="full"
           size="sm"
-          className="-translate-y-1/2 absolute top-1/2 right-0 text-default-500 opacity-0 hover:opacity-100 peer-hover:opacity-100 data-[hover=true]:bg-transparent data-[hover=true]:text-default-700"
+          className={cn(
+            '-translate-y-1/2 invisible absolute top-1/2 right-0 text-default-500 hover:visible group-hover:visible data-[hover=true]:bg-transparent data-[hover=true]:text-default-700',
+            open && 'visible',
+          )}
         >
           <span className="iconify lucide--more-horizontal size-4" />
         </Button>

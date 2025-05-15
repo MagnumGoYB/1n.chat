@@ -17,6 +17,8 @@ export interface ActionsProps {
   className?: string
   classNames?: DropdownProps['classNames']
   onAction?: (key: Key) => void
+  isOpen?: boolean
+  onOpenChange?: (open: boolean) => void
 }
 
 export default function Actions(props: PropsWithChildren<ActionsProps>) {
@@ -27,6 +29,8 @@ export default function Actions(props: PropsWithChildren<ActionsProps>) {
     onAction,
     className,
     classNames,
+    isOpen,
+    onOpenChange,
   } = props
 
   return (
@@ -34,6 +38,8 @@ export default function Actions(props: PropsWithChildren<ActionsProps>) {
       classNames={classNames}
       placement={placement}
       className={cn('min-w-36', className)}
+      isOpen={isOpen}
+      onOpenChange={onOpenChange}
     >
       <DropdownTrigger>{children}</DropdownTrigger>
       <DropdownMenu

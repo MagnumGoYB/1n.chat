@@ -90,7 +90,7 @@ export default function ModelSwitcher(props: ModelSwitcherProps) {
           variant="light"
           aria-label="Model Switcher"
           className={cn(
-            'rounded-lg font-medium text-sm capitalize',
+            'rounded-lg px-2 font-medium text-sm capitalize',
             isOpen && 'bg-default/40',
           )}
           size="sm"

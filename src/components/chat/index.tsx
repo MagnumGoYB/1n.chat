@@ -81,7 +81,14 @@ export default function Chat(props: ChatProps) {
       {hasMessages && (
         <section className="absolute bottom-0 flex w-full items-center justify-center px-2">
           <div className="w-full max-w-3xl">
-            <PromptInput className="rounded-b-none border border-b-0" />
+            <PromptInput
+              className="rounded-b-none border border-b-0"
+              actionsClassName="px-2 pb-1.5"
+              textareaProps={{
+                placeholder: 'Ask a follow up question...',
+                classNames: { input: 'text-sm pt-1.5' },
+              }}
+            />
           </div>
         </section>
       )}

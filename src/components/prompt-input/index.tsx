@@ -1,8 +1,9 @@
 'use client'
 
+import type { TextAreaProps } from '@heroui/react'
 import type { FC } from 'react'
 
-import { Button, type TextAreaProps, Textarea, cn } from '@heroui/react'
+import { Button, Textarea, cn } from '@heroui/react'
 import { useState } from 'react'
 
 import type { ModelItem } from '@/components/model-switcher/types'
@@ -14,6 +15,7 @@ import { modelsConfig } from '@/config/models'
 
 type PromptInputProps = {
   className?: string
+  actionsClassName?: string
   textareaProps?: Omit<TextAreaProps, 'onValueChange' | 'value'>
 }
 
@@ -27,7 +29,7 @@ const getModels = (user: User | null): ModelItem[] => {
 }
 
 const PromptInput: FC<PromptInputProps> = (props) => {
-  const { className, textareaProps } = props
+  const { className, actionsClassName, textareaProps } = props
 
   const { withCheckLoggedIn, user } = useUserGuard()
 
@@ -66,11 +68,6 @@ const PromptInput: FC<PromptInputProps> = (props) => {
         autoComplete="off"
         autoCorrect="off"
         spellCheck="false"
-        classNames={{
-          mainWrapper: 'w-full',
-          inputWrapper: '!bg-transparent shadow-none',
-          input: 'scrollbar-hide px-0.5 pt-1',
-        }}
         placeholder="Type your message here..."
         size="lg"
         minRows={2}
@@ -78,8 +75,19 @@ const PromptInput: FC<PromptInputProps> = (props) => {
         onValueChange={setValue}
         value={value}
         {...textareaProps}
+        classNames={{
+          mainWrapper: 'w-full',
+          inputWrapper: '!bg-transparent shadow-none',
+          input: 'scrollbar-hide px-0.5 pt-1',
+          ...textareaProps?.classNames,
+        }}
       />
-      <div className="flex w-full cursor-text items-center justify-between px-2.5 pb-2.5">
+      <div
+        className={cn(
+          'flex w-full cursor-text items-center justify-between px-2.5 pb-2.5',
+          actionsClassName,
+        )}
+      >
         <div className="flex items-center gap-0">
           <ModelSwitcher
             modelId={modelId}
