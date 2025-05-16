@@ -1,10 +1,10 @@
 'use client'
 
 import type { TextAreaProps } from '@heroui/react'
-import type { FC } from 'react'
+import type { ElementRef, FC } from 'react'
 
 import { Button, Textarea, cn } from '@heroui/react'
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 
 import type { ModelItem } from '@/components/model-switcher/types'
 import type { User } from '@/types/user'
@@ -17,6 +17,7 @@ type PromptInputProps = {
   className?: string
   actionsClassName?: string
   textareaProps?: Omit<TextAreaProps, 'onValueChange' | 'value'>
+  onSend?: (value: string) => void
 }
 
 const getModels = (user: User | null): ModelItem[] => {
@@ -29,30 +30,25 @@ const getModels = (user: User | null): ModelItem[] => {
 }
 
 const PromptInput: FC<PromptInputProps> = (props) => {
-  const { className, actionsClassName, textareaProps } = props
+  const { className, actionsClassName, textareaProps, onSend } = props
+
+  const modelSwitcherRef = useRef<ElementRef<typeof ModelSwitcher>>(null)
 
   const { withCheckLoggedIn, user } = useUserGuard()
-
   const [value, setValue] = useState('')
-  const [modelId, setModalId] = useState<ModelItem['id']>()
 
   const trimmedValue = value.trim()
-
-  const handleSelectModel = (id: ModelItem['id'], model: ModelItem) => {
-    if (model.isSubscriberOnly && user?.plan.value !== 'pro') {
-      setModalId(undefined)
-      return
-    }
-    setModalId(id)
-  }
 
   const handleAttachFile = () => {
     console.log('Attach file clicked')
   }
 
   const handleSend = () => {
+    const model = modelSwitcherRef.current?.getCurrentModel()
+    if (!model) return
     if (!trimmedValue) return
-    console.log('Send message:', trimmedValue)
+    console.log({ model, trimmedValue })
+    onSend?.(trimmedValue)
     setValue('')
   }
 
@@ -90,9 +86,9 @@ const PromptInput: FC<PromptInputProps> = (props) => {
       >
         <div className="flex items-center gap-0">
           <ModelSwitcher
-            modelId={modelId}
             models={getModels(user)}
-            onSelectModel={withCheckLoggedIn(handleSelectModel)}
+            onSelectModel={withCheckLoggedIn()}
+            ref={modelSwitcherRef}
           />
         </div>
         <div className="flex items-center gap-3">

@@ -11,8 +11,9 @@ import {
 } from '@radix-ui/react-scroll-area'
 import { forwardRef, useCallback, useState } from 'react'
 
+export type OnScrollState = { isAtTop: boolean; isAtBottom: boolean }
 export type ScrollAreaProps = {
-  areaProps?: ScrollAreaRootProps
+  areaProps?: Omit<ScrollAreaRootProps, 'onScroll'>
   defaultShadowVisibility?: ScrollShadowVisibility
   orientation?: 'vertical' | 'horizontal'
   classNames?: {
@@ -20,6 +21,7 @@ export type ScrollAreaProps = {
     scrollbar?: string
     thumb?: string
   }
+  onScroll?: (state: OnScrollState) => void
 }
 
 const ScrollArea = forwardRef<
@@ -32,30 +34,36 @@ const ScrollArea = forwardRef<
     orientation = 'vertical',
     children,
     classNames,
+    onScroll,
   } = props
   const [scrollShadowVisibility, setScrollShadowVisibility] =
     useState<ScrollShadowVisibility>(defaultShadowVisibility)
 
-  const onScroll: UIEventHandler<HTMLDivElement> = useCallback((e) => {
-    const isAtTop = e.currentTarget.scrollTop === 0
-    const isAtBottom =
-      e.currentTarget.scrollTop ===
-      e.currentTarget.scrollHeight - e.currentTarget.clientHeight
-    const isAtMiddle =
-      e.currentTarget.scrollTop > 0 &&
-      e.currentTarget.scrollTop <
+  const handleScroll: UIEventHandler<HTMLDivElement> = useCallback(
+    (e) => {
+      const isAtTop = e.currentTarget.scrollTop === 0
+      const isAtBottom =
+        e.currentTarget.scrollTop ===
         e.currentTarget.scrollHeight - e.currentTarget.clientHeight
+      const isAtMiddle =
+        e.currentTarget.scrollTop > 0 &&
+        e.currentTarget.scrollTop <
+          e.currentTarget.scrollHeight - e.currentTarget.clientHeight
 
-    if (isAtTop) {
-      setScrollShadowVisibility('bottom')
-    } else if (isAtBottom) {
-      setScrollShadowVisibility('top')
-    } else if (isAtMiddle) {
-      setScrollShadowVisibility('both')
-    } else {
-      setScrollShadowVisibility('auto')
-    }
-  }, [])
+      if (isAtTop) {
+        setScrollShadowVisibility('bottom')
+      } else if (isAtBottom) {
+        setScrollShadowVisibility('top')
+      } else if (isAtMiddle) {
+        setScrollShadowVisibility('both')
+      } else {
+        setScrollShadowVisibility('auto')
+      }
+
+      onScroll?.({ isAtTop, isAtBottom })
+    },
+    [onScroll],
+  )
 
   return (
     <ScrollShadow
@@ -75,7 +83,7 @@ const ScrollArea = forwardRef<
       >
         <ScrollAreaViewport
           className="h-full w-full rounded-[inherit]"
-          onScroll={onScroll}
+          onScroll={handleScroll}
         >
           {children}
         </ScrollAreaViewport>
@@ -97,5 +105,7 @@ const ScrollArea = forwardRef<
     </ScrollShadow>
   )
 })
+
 ScrollArea.displayName = 'ScrollArea'
+
 export default ScrollArea

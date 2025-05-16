@@ -46,6 +46,15 @@ export const modelFeatureIcons = {
 
 export const modelsConfig = [
   {
+    id: 'deepseek-v3',
+    icon: 'DeepSeek',
+    name: 'DeepSeek v3 (0324)',
+    tip: "Latest update to DeepSeek's chat model",
+    description:
+      'DeepSeek V3, a 685B-parameter, mixture-of-experts model, is the latest iteration of the flagship chat model family from the DeepSeek team. It succeeds the DeepSeek V3 model and performs really well on a variety of tasks.',
+    isDefault: true,
+  },
+  {
     id: 'gemini-2.0-flash',
     icon: 'Gemini',
     name: 'Gemini 2.0 Flash',
@@ -72,7 +81,6 @@ export const modelsConfig = [
     description:
       "Google's latest fast model, known for speed and accuracy (and also web search!). Not quite as smart as Claude 3.5 Sonnet, but WAY faster and cheaper. Also has an insanely large context window (it can handle a lot of data).",
     features: ['vision', 'pdf', 'search'],
-    isDefault: true,
   },
   {
     id: 'gemini-2.5-flash-thinking',

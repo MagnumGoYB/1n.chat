@@ -16,9 +16,15 @@ export interface ModelItem {
 }
 
 export interface ModelSwitcherProps {
-  modelId?: ModelItem['id']
   models: ModelItem[]
   defaultOpen?: boolean
   placement?: OverlayPlacement
+  disabled?: boolean
   onSelectModel?: (id: ModelItem['id'], model: ModelItem) => void
+}
+
+export interface ModelSwitcherRef {
+  open: () => void
+  close: () => void
+  getCurrentModel: () => ModelItem | null
 }
