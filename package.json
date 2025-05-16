@@ -14,12 +14,15 @@
   },
   "dependencies": {
     "@ai-sdk/deepseek": "^0.2.14",
+    "@ai-sdk/google": "^1.2.18",
+    "@ai-sdk/react": "^1.2.12",
     "@heroui/react": "^2.7.6",
     "@radix-ui/react-scroll-area": "^1.2.4",
     "@react-aria/ssr": "^3.9.8",
     "@react-aria/visually-hidden": "^3.8.22",
     "@tanstack/react-query": "^5.74.4",
     "@tanstack/react-query-devtools": "^5.74.4",
+    "ai": "^4.3.15",
     "clsx": "^2.1.1",
     "es-toolkit": "^1.36.0",
     "motion": "^12.7.4",
@@ -27,7 +30,8 @@
     "next-themes": "^0.4.6",
     "react": "18.3.1",
     "react-dom": "18.3.1",
-    "usehooks-ts": "^3.1.1"
+    "usehooks-ts": "^3.1.1",
+    "zod": "^3.24.4"
   },
   "devDependencies": {
     "@biomejs/biome": "^1.9.4",

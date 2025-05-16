@@ -1,41 +1,29 @@
 'use client'
 
 import type { TextAreaProps } from '@heroui/react'
-import type { ElementRef, FC } from 'react'
+import type { FC } from 'react'
 
 import { Button, Textarea, cn } from '@heroui/react'
-import { useRef, useState } from 'react'
+import { useState } from 'react'
 
-import type { ModelItem } from '@/components/model-switcher/types'
-import type { User } from '@/types/user'
+import type { Model } from '@/types/model'
 
 import ModelSwitcher from '@/components/model-switcher'
 import { useUserGuard } from '@/components/user-guard-provider'
-import { modelsConfig } from '@/config/models'
 
 type PromptInputProps = {
   className?: string
   actionsClassName?: string
   textareaProps?: Omit<TextAreaProps, 'onValueChange' | 'value'>
-  onSend?: (value: string) => void
-}
-
-const getModels = (user: User | null): ModelItem[] => {
-  return modelsConfig.map((model) => {
-    if (model.isSubscriberOnly || model.isPremiumOnly) {
-      return { ...model, disabled: user ? user?.plan.value !== 'pro' : true }
-    }
-    return model
-  })
+  onSend?: (model: Model, input: string) => void
 }
 
 const PromptInput: FC<PromptInputProps> = (props) => {
   const { className, actionsClassName, textareaProps, onSend } = props
 
-  const modelSwitcherRef = useRef<ElementRef<typeof ModelSwitcher>>(null)
-
-  const { withCheckLoggedIn, user } = useUserGuard()
   const [value, setValue] = useState('')
+  const [model, setModel] = useState<Model | null>(null)
+  const { withCheckLoggedIn } = useUserGuard()
 
   const trimmedValue = value.trim()
 
@@ -43,12 +31,13 @@ const PromptInput: FC<PromptInputProps> = (props) => {
     console.log('Attach file clicked')
   }
 
+  const handleSelectModel = (_: string, model: Model) => {
+    setModel(model)
+  }
+
   const handleSend = () => {
-    const model = modelSwitcherRef.current?.getCurrentModel()
-    if (!model) return
-    if (!trimmedValue) return
-    console.log({ model, trimmedValue })
-    onSend?.(trimmedValue)
+    if (!model || !trimmedValue) return
+    onSend?.(model, trimmedValue)
     setValue('')
   }
 
@@ -85,11 +74,7 @@ const PromptInput: FC<PromptInputProps> = (props) => {
         )}
       >
         <div className="flex items-center gap-0">
-          <ModelSwitcher
-            models={getModels(user)}
-            onSelectModel={withCheckLoggedIn()}
-            ref={modelSwitcherRef}
-          />
+          <ModelSwitcher onSelectModel={withCheckLoggedIn(handleSelectModel)} />
         </div>
         <div className="flex items-center gap-3">
           <Button
@@ -110,7 +95,7 @@ const PromptInput: FC<PromptInputProps> = (props) => {
             size="sm"
             variant="solid"
             className="pointer-events-auto bg-foreground text-background disabled:cursor-default disabled:bg-default-300 disabled:text-default-foreground/80 disabled:opacity-disabled"
-            isDisabled={!trimmedValue}
+            isDisabled={!trimmedValue || !model}
             onPress={withCheckLoggedIn(handleSend)}
           >
             <span className="iconify tabler--arrow-big-up size-[18px]" />

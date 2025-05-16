@@ -1,5 +1,7 @@
 'use client'
 
+import type { Model } from '@/types/model'
+
 import { title } from '@/components/primitives'
 import PromptInput from '@/components/prompt-input'
 
@@ -8,8 +10,15 @@ interface WelcomeProps {
 }
 
 export default function Welcome({ conversationId }: WelcomeProps) {
-  const handleSend = (value: string) => {
-    console.log('Send message:', value, 'conversation id:', conversationId)
+  const handleSend = (model: Model, value: string) => {
+    console.log(
+      'Send message:',
+      value,
+      'model:',
+      model,
+      'conversation id:',
+      conversationId,
+    )
   }
 
   return (

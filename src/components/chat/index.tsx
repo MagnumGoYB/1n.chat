@@ -7,6 +7,7 @@ import { useRef, useState } from 'react'
 
 import type { OnScrollState } from '@/components/scroll-area'
 import type { Message as MessageType } from '@/types/conversation'
+import type { Model } from '@/types/model'
 
 import Actions from '@/components/conversation/actions'
 import PromptInput from '@/components/prompt-input'
@@ -38,8 +39,8 @@ export default function Chat(props: ChatProps) {
     chatFlowRef.current?.scrollToBottom()
   }
 
-  const handleSend = (value: string) => {
-    console.log('Send message:', value)
+  const handleSend = (model: Model, value: string) => {
+    console.log('Send message:', value, 'model:', model, 'conversation id:', id)
   }
 
   return (

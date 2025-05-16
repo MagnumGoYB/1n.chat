@@ -12,13 +12,14 @@ export type ModelIconKey = keyof typeof ModelsIcon
 
 export type Model = {
   id: string
+  pid: string
   icon: ModelIconKey
   name: string
   tip?: string
   description: string
   features?: ModelFeature[]
-  isExperimental?: boolean
-  isSubscriberOnly?: boolean
-  isPremiumOnly?: boolean
+  isExperimental: boolean
+  isSubscriberOnly: boolean
+  isPremiumOnly: boolean
   isDefault?: boolean
 }
