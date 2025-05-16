@@ -13,6 +13,7 @@
     "check": "biome check --no-errors-on-unmatched"
   },
   "dependencies": {
+    "@ai-sdk/deepseek": "^0.2.14",
     "@heroui/react": "^2.7.6",
     "@radix-ui/react-scroll-area": "^1.2.4",
     "@react-aria/ssr": "^3.9.8",
