@@ -1,6 +1,7 @@
+import type { Config } from 'tailwindcss/types/config'
+
 import { heroui } from '@heroui/theme'
 import { addIconSelectors } from '@iconify/tailwind'
-import type { Config } from 'tailwindcss/types/config'
 
 export default {
   content: [

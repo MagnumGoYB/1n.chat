@@ -49,7 +49,7 @@ export default function Message(props: MessageProps) {
           role === 'assistant' && 'bg-transparent py-[5px] text-foreground',
         )}
       >
-        <div>{content}</div>
+        <div className="whitespace-pre-wrap">{content}</div>
       </div>
     </div>
   )
